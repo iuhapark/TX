@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/users")
