@@ -3,7 +3,7 @@ package com.pear.api.user.service;
 import com.pear.api.common.component.Messenger;
 import com.pear.api.common.component.security.JwtProvider;
 import com.pear.api.user.model.UserDTO;
-import com.pear.api.user.model.UserEntity;
+import com.pear.api.user.model.User;
 import com.pear.api.user.repository.UserRepository;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Messenger modify(UserDTO dto) {
-        Optional<UserEntity> optionalUser = repository.findById(dto.getId());
+        Optional<User> optionalUser = repository.findById(dto.getId());
         if (optionalUser.isPresent()) {
-            UserEntity user = optionalUser.get();
-            UserEntity modifyUser = user.toBuilder()
+            User user = optionalUser.get();
+            User modifyUser = user.toBuilder()
                     .password(dto.getPassword())
                     .job(dto.getJob())
                     .phone(dto.getPhone())
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Messenger login(UserDTO dto) {
         log.info("Parameters received through login service" + dto);
-        UserEntity user = repository.findByUsername(dto.getUsername()).get();
+        User user = repository.findByUsername(dto.getUsername()).get();
         String accessToken = jwtProvider.createToken(entityToDto(user));
         boolean flag = user.getPassword().equals(dto.getPassword());
         if (flag) {
