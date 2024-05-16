@@ -26,7 +26,7 @@ public class JwtProvider {
     private final UserRepository repository;
     Instant expiredDate = Instant.now().plus(1, ChronoUnit.DAYS);
 
-    public JwtProvider(UserRepository repository, @Value("${jwt.secret}") String secretKey) {
+    public JwtProvider(UserRepository repository, @org.springframework.beans.factory.annotation.Value("${jwt.secret}") String secretKey) {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretKey));
         this.repository = repository;
     }
