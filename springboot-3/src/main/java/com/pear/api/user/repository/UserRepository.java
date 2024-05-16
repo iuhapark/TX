@@ -1,6 +1,6 @@
 package com.pear.api.user.repository;
 
-import com.pear.api.user.model.UserEntity;
+import com.pear.api.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    List<UserEntity> findAllByOrderByIdDesc();
+public interface UserRepository extends JpaRepository<User, Long> {
+    List<User> findAllByOrderByIdDesc();
 
-    Optional<UserEntity> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     @Modifying
     @Query("update users a set a.token = :token where a.id = :id")
@@ -23,4 +23,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query("select count(id) as count from users where username =:username")
     Integer existsByUsername(@Param("username") String username);
+
 }
