@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 @Builder
+@Getter
+@Setter
 @ToString(exclude = {"id"})
 public class UserDTO {
     private Long id;
