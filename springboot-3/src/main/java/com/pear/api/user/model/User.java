@@ -1,9 +1,7 @@
 package com.pear.api.user.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.pear.api.common.model.BaseEntity;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +10,12 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 @Getter
+@Setter
 @Builder(toBuilder = true)
 @ToString(exclude = {"id"})
-public class UserEntity {
+public class User extends BaseEntity {
     @Id
+    @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
