@@ -8,8 +8,8 @@ import { existsUsername, login } from "@/app/components/user/service/user-servic
 import { IUser } from "@/app/components/user/model/user";
 import nookies, { parseCookies, destroyCookie, setCookie } from 'nookies'
 import { getAuth, getExistsUsername } from "@/app/components/user/service/user-slice";
-import { NextPage } from "next";
 import { jwtDecode } from "jwt-decode";
+import { PG } from "@/app/components/common/enums/PG";
 
 const SERVER = 'http://localhost:8080'
 
@@ -72,7 +72,7 @@ const handleSubmit = () => {
                       console.log('서버에서 넘어온 토큰 ' + parseCookies().accessToken)
                       console.log('토큰을 디코딩한 내용: ')
                       jwtDecode<any>(parseCookies().accessToken)
-                      router.push('/pages/boards/list')
+                      router.push(`${PG.USER}/detail/${1}`)
                   })
                   .catch((err: any) => {
                       console.log('LOGIN FAIL')
@@ -103,13 +103,6 @@ const handleSubmit = () => {
   return (
     <div className="flex items-center justify-center h-screen w-full px-5 sm:px-0">
       <div className="flex bg-white rounded-lg shadow-lg border overflow-hidden max-w-sm lg:max-w-4xl w-full">
-        <div
-          className="hidden md:block lg:w-1/2 bg-cover bg-blue-700"
-          style={{
-            backgroundImage: `url("/images/chair.jpg")`,
-            backgroundSize: "cover"
-          }}
-        ></div>
         <div className="w-full p-8 lg:w-1/2">
           <p className="text-xl text-gray-600 text-center">Welcome back!</p>
           <div className="mt-4">
@@ -163,7 +156,7 @@ const handleSubmit = () => {
           </pre>)}
           <div className="mt-8">
             <button onClick={handleSubmit}
-            className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">
+            className="static bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">
               Login
             </button>
           </div>

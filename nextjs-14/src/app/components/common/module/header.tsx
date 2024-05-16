@@ -10,10 +10,6 @@ import { destroyCookie, parseCookies } from 'nookies';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../user/service/user-service';
 
-
-const pages = ['COUTER', 'USERS', 'BOARDS', 'POSTS'];
-const settings = ['Profile', 'Account', 'Cart', 'Logout'];
-
 function Header() {
   const router = useRouter();
   const dispatch = useDispatch()
@@ -52,11 +48,10 @@ function Header() {
         </button>}
         {showProfile &&
           <div className="flex px-4 py-3 float-end">
-            <span className="block text-sm text-gray-900 dark:text-white">Juha Park</span>
-            <span className="block text-sm  text-gray-500 truncate dark:text-gray-400 mx-5">juha@gmail.com</span>
             <span 
             onClick={logoutHandler}
-            className="block text-sm  text-gray-500 truncate dark:text-gray-400"><a href="#">Logout</a>  </span>
+            className="block text-sm  text-gray-500 truncate dark:text-gray-400"><a href="#">Logout</a>
+            </span>
           </div>
         }
         <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
