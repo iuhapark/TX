@@ -6,12 +6,10 @@ import { useEffect, useState } from "react";
 import { PG } from "@/app/components/common/enums/PG";
 import { parseCookies } from "nookies";
 import { jwtDecode } from "jwt-decode";
-import MenuIcon from "@mui/icons-material/Menu";
 import { MenuBar } from "@/app/atoms/toggle/MenuBar";
 
 export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
-  const [theme, setTheme] = React.useState("light"); // 테마 상태 추가
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);

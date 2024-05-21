@@ -5,7 +5,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "./styles.css";
 import dynamic from "next/dynamic";
-import { parseCookies } from "nookies";
 import Profile from "./components/common/module/profile";
 import Footer from "./components/common/module/footer";
 import TemporaryDrawer from "./components/common/module/drawer";
