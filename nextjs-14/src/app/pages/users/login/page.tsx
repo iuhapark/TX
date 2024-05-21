@@ -4,10 +4,7 @@ import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import {
-  existsEmail,
-  login,
-} from "@/app/components/user/service/user-service";
+import { existsEmail, login } from "@/app/components/user/service/user-service";
 import { IUser } from "@/app/components/user/model/user";
 import nookies, { parseCookies, destroyCookie, setCookie } from "nookies";
 import {
@@ -49,6 +46,7 @@ export default function LoginPage() {
       setIsTrueEmail(false);
     }
   };
+
   const handlePassword = (e: any) => {
     const PW_CHECK =
       /^[a-zA-Z][a-zA-Z0-9!@#$%^&*()_+[\]{};':"\\|,.<>/?]{6,9}$/g;

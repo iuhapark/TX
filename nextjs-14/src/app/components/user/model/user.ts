@@ -6,7 +6,7 @@ export interface IUser {
   name?: string;
   phone?: string;
   job?: string;
-  age?: String;
+  age?: string;
   sex?: string;
   point?: string;
   balance?: string;

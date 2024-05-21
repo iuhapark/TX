@@ -80,44 +80,44 @@ export default function UserDetail() {
       <div className="mt-28 w-[54vh] h-[67vh] flex rounded-[3.5vh] shadow-2xl overflow-x-auto">
         <div className="w-full p-[8.5vh] justify-center items-center">
           <AccountCircleIcon sx={{ fontSize: 145 }} className="text-blue-400" />
-          <p className="text-3xl font-bold text-gray-700 dark:text-white mb-20 mt-7">
+          <p className="text-3xl font-bold text-gray-700 mb-20 mt-7">
             {user?.name || ""}
           </p>
           <div className="mt-6 w-full grid grid-cols-2 mb-10 gap-y-7">
             <div>
-              <p className="light:text-gray-700 dark:text-white font-bold">
+              <p className="text-gray-700 font-bold">
                 Email
               </p>
-              <p className="dark:text-white">{user?.email || ""}</p>
+              <p>{user?.email || ""}</p>
             </div>
             <div>
-              <p className="light:text-gray-700 dark:text-white font-bold">
+              <p className="text-gray-700 font-bold">
                 Name
               </p>
-              <p className="dark:text-white">{user?.name || ""}</p>
+              <p>{user?.name || ""}</p>
             </div>
             <div>
-              <p className="light:text-gray-700 dark:text-white font-bold">
+              <p className="text-gray-700 font-bold">
                 Phone
               </p>
-              <p className="dark:text-white">{user?.phone || ""}</p>
+              <p>{user?.phone || ""}</p>
             </div>
             <div>
-              <p className="light:text-gray-700 dark:text-white font-bold">
+              <p className="text-gray-700 font-bold">
                 Age
               </p>
-              <p className="dark:text-white">{user?.age || ""}</p>
+              <p>{user?.age || ""}</p>
             </div>
           </div>
         </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="w-[73vh] h-[67vh]">
         <div className="w-full p-[8.5vh] justify-center items-center overflow-y-auto">
-          <p className="text-xl font-bold light:text-gray-700 mb-20 text-center">
+          <p className="text-xl font-bold text-gray-700 mb-20 text-center">
             Update info
           </p>
           <div className="mb-4">
-            <label className="block light:text-gray-700 text-sm mb-2">
+            <label className="block text-gray-700 text-sm mb-2">
               Email
             </label>
             <input
@@ -127,7 +127,7 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block light:text-gray-700 text-sm mb-2">
+            <label className="block text-gray-700 text-sm mb-2">
               Password
             </label>
             <input
@@ -138,7 +138,7 @@ export default function UserDetail() {
           </div>
 
           <div className="mb-4">
-            <label className="block light:text-gray-700 text-sm mb-2">
+            <label className="block text-gray-700 text-sm mb-2">
               Name
             </label>
             <input
@@ -149,7 +149,7 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block light:text-gray-700 text-sm mb-2">
+            <label className="block text-gray-700 text-sm mb-2">
               Phone
             </label>
             <input
@@ -159,7 +159,7 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block light:text-gray-700  text-sm mb-2">
+            <label className="block text-gray-700  text-sm mb-2">
               Age
             </label>
             <input
@@ -169,7 +169,7 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block light:text-gray-700  text-sm mb-2">
+            <label className="block text-gray-700  text-sm mb-2">
               Sex
             </label>
             <input

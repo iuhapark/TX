@@ -2,6 +2,7 @@
 
 import { IUser } from "@/app/components/user/model/user";
 import {
+  existsEmail,
   existsUsername,
   findUserById,
   join,
@@ -12,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { PG } from "@/app/components/common/enums/PG";
-import { getExistsUsername } from "@/app/components/user/service/user-slice";
+import { getExistsUsername, getExistsEmail } from "@/app/components/user/service/user-slice";
 
 export default function Join({ params }: any) {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function Join({ params }: any) {
   const [beforeSubmit, setBeforeSubmit] = useState(true);
   const [len, setLen] = useState("");
   const existsUsernameSelector = useSelector(getExistsUsername);
+  const existsEmailSelector = useSelector(getExistsEmail);
 
   const {
     register,
@@ -63,6 +65,34 @@ export default function Join({ params }: any) {
     }
   };
 
+  const handleEmail = async (e: any) => {
+    dispatch(existsEmail(e.target.value));
+    const EMAIL_CHECK = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    setUser({
+      ...user,
+      email: e.target.value,
+    });
+    setLen(e.target.value);
+    setBeforeSubmit(true);
+
+    if (EMAIL_CHECK.test(len)) {
+      try {
+        const response = await dispatch(existsEmail(e.target.value));
+        setIsWrongEmail(!response.payload);
+        setIsTrueEmail(true);
+      } catch (error) {
+        console.error("Error checking email:", error);
+        setErrorMessage("Failed to check email. Please try again.");
+      }
+      setIsWrongEmail(false);
+      setIsTrueEmail(true);
+    } else {
+      setIsWrongEmail(true);
+      setIsTrueEmail(false);
+    }
+  };
+
   const handlePassword = (e: any) => {
     const PW_CHECK =
       /^[a-zA-Z][a-zA-Z0-9!@#$%^&*()_+[\]{};':"\\|,.<>/?]{6,9}$/g;
@@ -82,20 +112,7 @@ export default function Join({ params }: any) {
     }
   };
 
-  const handleEmail = (e: any) => {
-    setUser({ ...user, email: e.target.value });
-    const EMAIL_CHECK = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-    setBeforeSubmit(true);
-
-    if (EMAIL_CHECK.test(e.target.value)) {
-      setIsWrongEmail(false);
-      setIsTrueEmail(true);
-    } else {
-      setIsWrongEmail(true);
-      setIsTrueEmail(false);
-    }
-  };
 
   const handleName = (e: any) => {
     setUser({ ...user, name: e.target.value });
@@ -169,7 +186,7 @@ export default function Join({ params }: any) {
             </label>{" "}
             <input
               type="password"
-              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handlePassword}
               // {...register("password", { required: "Password is required" })}
             />

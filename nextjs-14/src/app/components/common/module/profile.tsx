@@ -40,10 +40,10 @@ export default function Profile() {
         router.push(`${PG.USER}${PG.DETAIL}/${decoded.id}`);
       } catch (error) {
         console.error("Invalid token:", error);
-        router.push(`${PG.USER}/auth`);
+        router.push(`${PG.AUTH}/callback`);
       }
     } else {
-      router.push(`${PG.USER}/auth`);
+      router.push(`${PG.AUTH}/callback`);
     }
   };
 
@@ -67,7 +67,7 @@ export default function Profile() {
         {!showProfile && (
           <PermIdentityIcon
             type="button"
-            className="h-8 w-8 text-black dark:text-white cursor-pointer mr-4"
+            className="h-8 w-8 var(--ash-black) cursor-pointer mr-4"
             id="user-menu-button"
             aria-expanded="false"
             data-dropdown-toggle="user-dropdown"
@@ -79,7 +79,7 @@ export default function Profile() {
           <div className="flex items-center">
             <PermIdentityIcon
               onClick={profileHandler}
-              className="mr-4 text-black dark:text-white cursor-pointer"
+              className="mr-4 var(--ash-black) cursor-pointer"
             ></PermIdentityIcon>
             {/* <PaymentIcon 
               onClick={() => router.push(`${PG.PAY}/${user.id}`)}
@@ -88,7 +88,7 @@ export default function Profile() {
             {token && (
               <LogoutIcon
                 onClick={logoutHandler}
-                className="h-8 w-8 text-black dark:text-white cursor-pointer"
+                className="h-8 w-8 var(--ash-black) cursor-pointer"
               >
                 <span className="sr-only">Logout</span>
               </LogoutIcon>
