@@ -41,17 +41,21 @@ export default function HomePage() {
   return (
     <div>
       <div>
-        <video
+        {/* <video
           className="w-full font-semibold max-h-[80vh] object-cover pointer-events-none"
           autoPlay
           muted
           loop
           playsInline
         >
-          <source src="/img/white.mp4" type="video/mp4" />
-        </video>
+          <source src="" type="video/mp4" />
+        </video> */}
+        <img
+          className="w-full font-semibold max-h-[80vh] object-cover pointer-events-none"
+          src="/img/video-call.jpeg"
+        />
         <div className="video-overlay">
-          <h1>
+          <h1 className="text-white bg-black">
             지금, 로메이트에게 물어보세요. <br />
             Your Legal Solution, One Message Away.
           </h1>
