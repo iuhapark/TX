@@ -53,6 +53,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
 
+    // netty
+    runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.111.Final:osx-aarch_64")
+
     // iamport
     implementation group: 'com.github.iamport', name: 'iamport-rest-client-java', version: '0.2.23'
     implementation group: 'com.squareup.retrofit2', name: 'adapter-rxjava2', version: '2.11.0'
