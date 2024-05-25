@@ -99,25 +99,25 @@ export default function HomePage() {
       <MenuToggle toggle={() => setIsOpen(!isOpen)} />
     </div>
     
-    <Home style={{ margin:'40px', color:'black'}}></Home>
-        <div className="h-[3vh] items-center flex justify-center px-5 lg:px-0"></div>
-        <div className="items-center flex justify-center dark:text-white text-[28px]">peàr</div>
-          <div className="h-[80vh] items-center flex justify-center px-5 lg:px-0">
+    <Home className="h-[5vh] px-5 lg:px-0"></Home>
+        <div className="items-center flex justify-center px-5 lg:px-0"></div>
+        <div className="items-center flex justify-center dark:text-white text-[30px] font-bold">peàr</div>
+          <div className="h-[70vh] items-center flex justify-center px-5 lg:px-0">
             <div className="flex flex-col items-center justify-center w-full text-2xl xl:text-4xl font-extrabold text-900">
               <h1 className=" dark:text-white"> How can I help you today? </h1>
             </div></div>
-            <div className="mx-auto max-w-[100vh] flex flex-col gap-4">
+            <div className="mx-auto max-w-[100vh] flex items-center gap-4">
               <h4>{message? message:""}</h4>
               <form onSubmit={handleSubmit(onSubmit)}>
+              <div>
               <input
               type="text"
               {...register("question", { required: true })} 
-                className="w-full px-5 py-3 rounded-lg font-medium text-black bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                className="w-[80vh] px-5 py-3 rounded-lg font-medium text-black bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                 placeholder="Message here"
               />
-              <div className="h-[5vh] py-3 items-center justify-center">
               <button type="submit"
-              className="h-[5vh] w-[15vh] relative  p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+              className="h-[5.4vh] w-[15vh] ml-4 static text-sm font-medium text-white rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                 Send
               </button>
               </div>

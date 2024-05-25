@@ -1,7 +1,7 @@
 body {
   --black: #000000;
   --ash-black: #222;
-  --white: #fafafa;
+  --white: #ffffff;
   --sky: #00ccff;
   --green: #22dddd;
   --blue: #1300ff;
@@ -13,7 +13,7 @@ body {
   --yellow: #ffbb00;
 
   --background: var(--white);
-  --accent: var(--black);
+  --text-color: var(--black);
 
   margin: 0;
   padding: 0;
@@ -23,13 +23,20 @@ body {
   min-height: 100vh;
 }
 
+@media (prefers-color-scheme: dark) {
+  body {
+    --background: var(--ash-black);
+    --text-color: var(--white);
+  }
+}
+
 .menu {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   width: 250px;
-  background: var(--accent);
+  background: var(--background); /* 메뉴 박스 */
   padding-top: 100px;
   transform: translateX(-100%);
   will-change: transform;
@@ -43,10 +50,10 @@ ul {
 }
 
 li {
-  color: var(--background);
+  color: var(--text-color); /* 메뉴 글자색 */
   display: block;
   transform-origin: -20px 50%;
-  font-size: 15px;
+  font-size: 20px;
   will-change: transform, opacity, filter;
 }
 
