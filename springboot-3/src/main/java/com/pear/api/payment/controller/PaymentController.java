@@ -10,6 +10,7 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,6 +40,11 @@ public class PaymentController {
     private String restApiSecret;
 
     private IamportClient iamportClient;
+
+    @PostConstruct
+    public void init() {
+        this.iamportClient = new IamportClient(restApiKey, restApiSecret);
+    }
 
     @PostMapping("/save")
     public ResponseEntity<Messenger> savePayment(@RequestBody PaymentDto dto) {
