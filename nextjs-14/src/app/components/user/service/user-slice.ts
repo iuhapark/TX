@@ -22,11 +22,12 @@ interface UserState {
   existsUsername?: boolean
 
 }
-export const initialState: UserState = {
+const initialState = {
   json: {} as IUser,
   array: [],
   auth: {} as IAuth,
-  existsUsername: false
+  id: 0 as number,
+  existsUsername: false,
 };
 
 export const userSlice = createSlice({
@@ -48,12 +49,12 @@ export const userSlice = createSlice({
 
 export const getAllUsers = (state: any) => state.user.array;
 export const getUserById = (state: any) => {
-  console.log("User in user-slice: " + JSON.stringify(state.user));
+  console.log("User in user-slice: " + JSON.stringify(state.user.json));
   return state.user.json;}
 export const getMessage = (state: any) => state.user.message;
 export const getAuth = (state: any) => state.user.auth;
 export const getExistsUsername = (state: any) => state.user.existsUsername;
 
-export const { } = userSlice.actions;
+
 
 export default userSlice.reducer;
