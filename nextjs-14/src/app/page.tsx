@@ -27,7 +27,7 @@ export default function HomePage() {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log("input content : " + JSON.stringify(data));
-    fetch("http://localhost:8000/api", {
+    fetch("http://localhost:8080/api", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

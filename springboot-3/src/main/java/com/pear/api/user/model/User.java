@@ -3,12 +3,10 @@ package com.pear.api.user.model;
 import com.pear.api.common.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 @Entity(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Component
 @Getter
 @Setter
 @Builder(toBuilder = true)
