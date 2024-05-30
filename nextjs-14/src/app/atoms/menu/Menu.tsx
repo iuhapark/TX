@@ -9,15 +9,6 @@ import { parseCookies } from "nookies";
 import { IPayment } from "@/app/components/payment/model/payment";
 import { getPaymentById } from "@/app/components/payment/service/payment-slice";
 
-// const User = ({ params }: any) => {
-//   const dispatch = useDispatch();
-//   const user: IUser = useSelector(getUserById);
-
-//   useEffect(() => {
-//     dispatch(findUserById(params.id));
-//   }, [dispatch, params.id]);
-// }
-
 export function Menu() {
   return (
     <nav className="menu">
