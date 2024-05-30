@@ -18,7 +18,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         interceptor.setParamName("locale");
         registry.addInterceptor(authInterceptor)
 //                .addPathPatterns("/api/**")
-                .excludePathPatterns("/**");
+                .excludePathPatterns("/api/auth/**")
+                .excludePathPatterns("/api/users/**")
+                .excludePathPatterns("/api/payment/**")
+                .excludePathPatterns("/favicon.ico");
+
         //token 있는지 여부 확인하는 역할
     }
 }
