@@ -38,4 +38,6 @@ public interface UserService extends CommandService<UserDTO>, QueryService<UserD
     Boolean logout(String accessToken);
 
     Boolean existsByUsername(String username);
+
+    User autoRegister();
 }

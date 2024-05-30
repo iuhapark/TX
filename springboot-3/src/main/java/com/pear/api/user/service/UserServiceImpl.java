@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Log4j2
 @Service
@@ -41,6 +42,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> findAll() {
         return repository.findAllByOrderByIdDesc().stream().map(i -> entityToDto(i)).toList();
+    }
+
+    @Override
+    public Optional<UserDTO> findById(Long id) {
+        return repository.findById(id).map(i -> entityToDto(i));
+    }
+
+    @Override
+    public Messenger count() {
+        return Messenger.builder().message(repository.count() + "").build();
     }
 
     @Override
@@ -100,5 +111,14 @@ public class UserServiceImpl implements UserService {
     public Boolean existsByUsername(String username) {
         Integer count = repository.existsByUsername(username);
         return count == 1;
+    }
+
+    @Override
+    public User autoRegister() {
+        User user = User.builder()
+                .username(UUID.randomUUID().toString())
+                .email("example@example.com")
+                .build();
+        return repository.save(user);
     }
 }
