@@ -5,20 +5,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { destroyCookie, parseCookies } from 'nookies';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../user/service/user-service';
 
 function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [showProfile, setShowProfile] = useState(false);
-
-  useEffect(() => {
-    if (parseCookies().accessToken) {
-      setShowProfile(true);
-    } else {
-      setShowProfile(false);
-    }
-  }, [parseCookies().accessToken]);
 
   return (
     <nav className="fixed top-0 left-0 z-50 rounded-b-2xl transition-all duration-300 p-3 w-full bg-white dark:bg-black">
