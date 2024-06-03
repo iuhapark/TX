@@ -2,7 +2,14 @@ import axios, { AxiosInstance } from "axios";
 import { parseCookies } from "nookies";
 
 export default function instance() {
-  const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL });
+  const instance = axios.create({ baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      "Cash-Control": "no-cache",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer ~blah",
+    },
+   });
   setInterceptor(instance);
   return instance;
 }
