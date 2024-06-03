@@ -5,8 +5,8 @@ export const ODD_OPACITY = 0.2;
 export const Home = styled('div')(({ theme }) => ({
   fontSize: '2rem',
   fontWeight: 'bold',
-  color: 'white',
-  marginRight: '30px'
+  marginRight: '30px',
+  paddingTop: '16px',
 }));
 
 export const AppBar = styled('div')(({ theme }) => ({

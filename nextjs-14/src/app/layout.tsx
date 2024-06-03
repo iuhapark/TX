@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Header from "./components/common/module/header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -6,11 +6,13 @@ import "./globals.css";
 import "./styles.css";
 import dynamic from "next/dynamic";
 import { parseCookies } from "nookies";
-import App from "./components/common/module/toggle";
+import App from "./components/common/module/menu";
+import Profile from "./components/common/module/profile";
+import Footer from "./components/common/module/footer";
 
 const ReduxProvider = dynamic(() => import("@/redux/redux-provider"), {
-  ssr: false
-})
+  ssr: false,
+});
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,17 +26,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="mt-100">
-        <ReduxProvider >
-        {parseCookies().message === 'SUCCESS' && <Header/>}
-        <App/>
-           {children}
-           </ReduxProvider>
-        </div>
+        <ReduxProvider>
+          <header>{parseCookies().message === "SUCCESS" && <Header />}</header>
+          <main>
+            <App />
+            <Profile />
+            {children}
+          </main>
+          <footer className="footer">
+            <Footer />
+          </footer>
+        </ReduxProvider>
       </body>
     </html>
   );
