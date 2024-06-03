@@ -4,4 +4,6 @@ export const enum PG {
   POST = "/pages//posts",
   DEMO = "/pages/demos",
   ABOUT = "/pages/about",
+  PAY = "/pages/payments",
+  ITEM = "/pages/products"
 }
