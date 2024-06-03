@@ -6,4 +6,5 @@ export interface UserColumn {
     phone?: string;
     email?: string;
     job?: string;
+    addressId?: string;
 }

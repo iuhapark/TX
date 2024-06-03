@@ -16,6 +16,7 @@ export const findAllUsersAPI = async (page: number) => {
 export const findUserByIdAPI = async (id: number) => {
   try {
     const response = await instance().get(`/users/detail`, { params: { id } });
+    console.log("MY-INFO:  users/detail " + JSON.stringify(response.data))
     return response.data;
   } catch (error) {
     console.log(error);
@@ -24,7 +25,7 @@ export const findUserByIdAPI = async (id: number) => {
 };
 
 export const loginAPI = async (user:IUser) => {
-  console.log(`로그인 API에 넘어온 파라미터: ${JSON.stringify(user)}`)
+  console.log(`Parameter in loginAPI: ${JSON.stringify(user)}`)
   try {
     const response = await instance().post(`/auth/login`, user);
     return response.data;
@@ -34,11 +35,20 @@ export const loginAPI = async (user:IUser) => {
   }
 };
 
+export const joinAPI = async (user: IUser) => {
+  try {
+    const response = await instance().post(`/users/save`, user);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 export const existsUsernameAPI = async (username: string) => {
   try{
       const response = await instance().get(`/auth/existsUsername`,{params: {username}})
-      console.log('existsUsernameAPI 결과: '+ response.data)
+      console.log('existsUsernameAPI resulted: '+ response.data)
       return response.data
   }catch(error){
       console.log(error)
@@ -49,7 +59,27 @@ export const existsUsernameAPI = async (username: string) => {
 export const logoutAPI = async () => {
   try {
     const response = await instance().get(`/users/logout`);
-    console.log("logoutAPI 결과: " + response.data)
+    console.log("logoutAPI resulted: " + response.data)
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const UpdateUserAPI = async (id: number) => {
+  try {
+    const response = await instance().put(`/users/modify`, { params: { id } });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const deleteUserAPI = async (id: number) => {
+  try {
+    const response = await instance().delete(`/users/delete`, { params: { id } });
     return response.data;
   } catch (error) {
     console.log(error);

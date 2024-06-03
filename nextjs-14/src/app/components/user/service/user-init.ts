@@ -8,6 +8,7 @@ export const initialState: IUser = {
   name: '',
   phone: '',
   job: '',
+  addressId: '',
   regDate: '',
   modDate: ''
 };

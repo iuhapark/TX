@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { existsUsername, findAllUsers, findUserById, login } from "./user-service";
+import { existsUsername, findAllUsers, findUserById, login, updateUser } from "./user-service";
 import { IUser } from "../model/user";
 
 const userThunks = [findAllUsers, findUserById];
@@ -42,15 +42,17 @@ export const userSlice = createSlice({
     .addCase(findUserById.fulfilled,  (state: any, {payload}: any) => {state.json=payload})
     .addCase(login.fulfilled,  (state: any, {payload}: any) => {state.auth=payload})
     .addCase(existsUsername.fulfilled,  (state: any, {payload}: any) => {state.existsUsername=payload})
+    .addCase(updateUser.fulfilled,  (state: any, {payload}: any) => {state.json=payload})
   },
 });
 
 export const getAllUsers = (state: any) => state.user.array;
-export const getUserById = (state: any) => state.user.json;
+export const getUserById = (state: any) => {
+  console.log("User in user-slice: " + JSON.stringify(state.user));
+  return state.user.json;}
 export const getMessage = (state: any) => state.user.message;
 export const getAuth = (state: any) => state.user.auth;
 export const getExistsUsername = (state: any) => state.user.existsUsername;
-
 
 export const { } = userSlice.actions;
 
