@@ -1,6 +1,6 @@
 package com.pear.api.user.repository;
 
-import com.pear.api.user.model.UserDTO;
+import com.pear.api.user.model.UserDto;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO{
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return null;
     }
 }

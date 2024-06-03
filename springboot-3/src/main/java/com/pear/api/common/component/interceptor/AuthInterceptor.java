@@ -1,6 +1,7 @@
 package com.pear.api.common.component.interceptor;
 
 import com.pear.api.common.component.security.JwtProvider;
+import com.pear.api.user.model.User;
 import com.pear.api.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Component
@@ -23,25 +25,25 @@ public class AuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
-//        String token = jwtProvider.extractTokenFromHeader(request);
-//        log.info("1-Interceptor Token 로그 Bearer 포함: {}", token);
-//
-//        if (token.equals("undefined")) {
-//            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-//            return false;
-//        }
-//
-//        Long id = jwtProvider.getPayload(token).get("id", Long.class); //claims 안에 있음
-//        log.info("2- Interceptor 사용자 id : {}" + id);
-//
-//        Optional<User> user = repository.findById(id);
-//        log.info("3- Interceptor 사용자 정보 : {}", user);
-//
-//        if (!user.isPresent()) {
-//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-//            return false;
-//        }
-//        log.info("4- Interceptor 최종 여부 : {}", true);
+        String token = jwtProvider.extractTokenFromHeader(request);
+        log.info("1-Interceptor Token 로그 Bearer 포함: {}", token);
+
+        if (token.equals("undefined")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return false;
+        }
+
+        Long id = jwtProvider.getPayload(token).get("id", Long.class); //claims 안에 있음
+        log.info("2- Interceptor 사용자 id : {}" + id);
+
+        Optional <User> user = repository.findById(id);
+        log.info("3- Interceptor 사용자 정보 : {}", user);
+
+        if (!user.isPresent()) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return false;
+        }
+        log.info("4- Interceptor 최종 여부 : {}", true);
 
         return Stream.of(request)
                 .map(i -> jwtProvider.extractTokenFromHeader(i))

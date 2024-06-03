@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService{
         // 임시 결제내역 생성
         Payment payment = Payment.builder()
                 .price(1000L)
-                .status(PaymentStatus.READY)
+//                .status(PaymentStatus.READY)
                 .build();
         paymentRepository.save(payment);
 
@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService{
         Order order = Order.builder()
                 .user(user)
                 .price(1000L)
-                .itemName("1달러샵 상품")
+                .itemName("Test item")
                 .orderUid(UUID.randomUUID().toString())
                 .payment(payment)
                 .build();

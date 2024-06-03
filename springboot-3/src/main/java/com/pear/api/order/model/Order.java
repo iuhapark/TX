@@ -12,6 +12,7 @@ import lombok.*;
 
 public class Order {
     @Id
+    @Column(name = "order_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long price;
@@ -25,7 +26,8 @@ public class Order {
     private Payment payment;
 
     @Builder
-    public Order(Long price, String itemName, String orderUid, User user, Payment payment) {
+    public Order(Long id, Long price, String itemName, String orderUid, User user, Payment payment) {
+        this.id = id;
         this.price = price;
         this.itemName = itemName;
         this.orderUid = orderUid;

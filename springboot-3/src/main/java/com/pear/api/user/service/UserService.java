@@ -4,12 +4,12 @@ import com.pear.api.common.component.Messenger;
 import com.pear.api.common.service.CommandService;
 import com.pear.api.common.service.QueryService;
 import com.pear.api.user.model.User;
-import com.pear.api.user.model.UserDTO;
+import com.pear.api.user.model.UserDto;
 
-public interface UserService extends CommandService<UserDTO>, QueryService<UserDTO> {
-    Messenger modify(UserDTO user);
+public interface UserService extends CommandService<UserDto>, QueryService<UserDto> {
+    Messenger modify(UserDto user);
 
-    default User dtoToEntity(UserDTO dto) {
+    default User dtoToEntity(UserDto dto) {
         return User.builder()
                 .id(dto.getId())
                 .username(dto.getUsername())
@@ -21,8 +21,8 @@ public interface UserService extends CommandService<UserDTO>, QueryService<UserD
                 .build();
     }
 
-    default UserDTO entityToDto(User user) {
-        return UserDTO.builder()
+    default UserDto entityToDto(User user) {
+        return UserDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
@@ -33,7 +33,7 @@ public interface UserService extends CommandService<UserDTO>, QueryService<UserD
                 .build();
     }
 
-    Messenger login(UserDTO param);
+    Messenger login(UserDto param);
 
     Boolean logout(String accessToken);
 

@@ -2,7 +2,7 @@ package com.pear.api.user.service;
 
 import com.pear.api.common.component.Messenger;
 import com.pear.api.common.component.security.JwtProvider;
-import com.pear.api.user.model.UserDTO;
+import com.pear.api.user.model.UserDto;
 import com.pear.api.user.model.User;
 import com.pear.api.user.repository.UserRepository;
 import lombok.*;
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Messenger save(UserDTO dto) {
+    public Messenger save(UserDto dto) {
         entityToDto((repository.save(dtoToEntity(dto))));
         return Messenger.builder()
                 .message(repository.existsById(dto.getId()) ? "SUCCESS" : "FAILURE")
@@ -40,12 +40,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> findAll() {
+    public List<UserDto> findAll() {
         return repository.findAllByOrderByIdDesc().stream().map(i -> entityToDto(i)).toList();
     }
 
     @Override
-    public Optional<UserDTO> findById(Long id) {
+    public Optional<UserDto> findById(Long id) {
         return repository.findById(id).map(i -> entityToDto(i));
     }
 
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Messenger modify(UserDTO dto) {
+    public Messenger modify(UserDto dto) {
         Optional<User> optionalUser = repository.findById(dto.getId());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Messenger login(UserDTO dto) {
+    public Messenger login(UserDto dto) {
         log.info("Parameters received through login service" + dto);
         User user = repository.findByUsername(dto.getUsername()).get();
         String accessToken = jwtProvider.createToken(entityToDto(user));

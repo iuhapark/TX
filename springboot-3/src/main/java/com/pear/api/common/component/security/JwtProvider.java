@@ -1,6 +1,6 @@
 package com.pear.api.common.component.security;
 
-import com.pear.api.user.model.UserDTO;
+import com.pear.api.user.model.UserDto;
 import com.pear.api.user.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -31,13 +31,12 @@ public class JwtProvider {
         this.repository = repository;
     }
 
-    public String createToken(UserDTO dto) {
+    public String createToken(UserDto dto) {
         String token = Jwts.builder()
                 .issuer(issuer)
                 .signWith(secretKey)
                 .expiration(Date.from(expiredDate))
                 .subject("pear")
-                .claim("userId", dto.getId())
                 .claim("username", dto.getUsername())
                 .claim("job", dto.getJob())
                 .claim("id", dto.getId())

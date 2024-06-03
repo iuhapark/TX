@@ -1,7 +1,7 @@
 package com.pear.api.user.controller;
 
 import com.pear.api.common.component.Messenger;
-import com.pear.api.user.model.UserDTO;
+import com.pear.api.user.model.UserDto;
 import com.pear.api.user.service.UserService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -27,13 +28,18 @@ public class UserController {
 
     @SuppressWarnings("static-access")
     @PostMapping(path = "/save")
-    public ResponseEntity<Messenger> save(@RequestBody UserDTO dto) throws SQLException {
+    public ResponseEntity<Messenger> save(@RequestBody UserDto dto) throws SQLException {
         return ResponseEntity.ok(service.save(dto));
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<Optional<UserDto>> findById(@RequestParam("id") Long id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
 
     @PutMapping("/modify")
-    public ResponseEntity<Messenger> modify(@RequestBody UserDTO param) {
+    public ResponseEntity<Messenger> modify(@RequestBody UserDto param) {
         return ResponseEntity.ok(service.modify(param));
     }
 

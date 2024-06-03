@@ -1,10 +1,10 @@
 package com.pear.api.user.repository;
 
-import com.pear.api.user.model.UserDTO;
+import com.pear.api.user.model.UserDto;
 
 import java.util.List;
 
 public interface UserDAO {
-    List<UserDTO> getAllUsers();
+    List<UserDto> getAllUsers();
 
 }

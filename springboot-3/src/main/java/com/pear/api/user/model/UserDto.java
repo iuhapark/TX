@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @ToString(exclude = {"id"})
-public class UserDTO {
+public class UserDto {
     private Long id;
     private String username;
     private String password;

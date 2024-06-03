@@ -1,7 +1,7 @@
 package com.pear.api.user.controller;
 
 import com.pear.api.common.component.Messenger;
-import com.pear.api.user.model.UserDTO;
+import com.pear.api.user.model.UserDto;
 import com.pear.api.user.service.UserService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -25,7 +25,7 @@ public class AuthController {
     private final UserService service;
 
     @PostMapping(path = "/login")
-    public ResponseEntity<Messenger> login(@RequestBody UserDTO dto) throws SQLException {
+    public ResponseEntity<Messenger> login(@RequestBody UserDto dto) throws SQLException {
         Messenger messenger = service.login(dto);
         return ResponseEntity.ok(messenger);
     }
