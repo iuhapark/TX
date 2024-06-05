@@ -48,13 +48,13 @@ public class PaymentController {
 
     @PostMapping("/save")
     public ResponseEntity<Messenger> savePayment(@RequestBody PaymentDto dto) {
-        log.info("Parameters received through controller"+dto);
+        log.info("Parameters received through controller" + dto);
         return ResponseEntity.ok(paymentService.save(dto));
     }
 
     @PostMapping("/status")
     public ResponseEntity<String> paymentStatus(@RequestBody PaymentStatus status) {
-        log.info("Parameters received through controller"+status);
+        log.info("Parameters received through controller" + status);
         if (status == PaymentStatus.OK) {
             // 결제 성공 시 처리할 로직 작성
             return new ResponseEntity<>("Payment success", HttpStatus.OK);
@@ -69,6 +69,28 @@ public class PaymentController {
         log.info("imp_uid={}", imp_uid);
         IamportResponse<Payment> response = iamportClient.paymentByImpUid(imp_uid);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/balance/{id}")
+    public ResponseEntity<PaymentDto> getBalance(@PathVariable("id") Long id) {
+        PaymentDto dto = paymentService.getBalance(id);
+        return ResponseEntity.ok().body(dto);
+
+    }
+
+    @PostMapping("/charge")
+    public ResponseEntity<Messenger> charge(@RequestBody PaymentDto dto) {
+        return ResponseEntity.ok(paymentService.charge(dto));
+    }
+
+    @PostMapping("/withdraw")
+    public ResponseEntity<Messenger> withdraw(@RequestBody PaymentDto dto) {
+        return ResponseEntity.ok(paymentService.withdraw(dto));
+    }
+
+    @PatchMapping("/cancel")
+    public void canclePayment(@RequestBody PaymentDto dto) {
+        paymentService.cancel(dto);
     }
 
 }
