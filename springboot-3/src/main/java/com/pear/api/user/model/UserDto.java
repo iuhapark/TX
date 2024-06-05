@@ -8,9 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 @Builder
-@Getter
-@Setter
-@ToString(exclude = {"id"})
 public class UserDto {
     private Long id;
     private String username;
@@ -22,4 +19,5 @@ public class UserDto {
     private String regDate;
     private String modDate;
     private String token;
+    private Long balance = 0L;
 }
