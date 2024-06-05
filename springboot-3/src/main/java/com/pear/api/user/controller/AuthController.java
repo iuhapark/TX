@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+
 @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Invalid ID supplied"),
         @ApiResponse(responseCode = "404", description = "Customer not found")
@@ -23,6 +24,13 @@ import java.sql.SQLException;
 
 public class AuthController {
     private final UserService service;
+
+    @SuppressWarnings("static-access")
+    @PostMapping("/save")
+    public ResponseEntity<Messenger> save(@RequestBody UserDto dto) throws SQLException {
+        log.info("Parameters received through controller: " + dto);
+        return ResponseEntity.ok(service.save(dto));
+    }
 
     @PostMapping(path = "/login")
     public ResponseEntity<Messenger> login(@RequestBody UserDto dto) throws SQLException {
