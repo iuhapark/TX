@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderService{
     public Order autoOrder(User user) {
         // 임시 결제내역 생성
         Payment payment = Payment.builder()
-                .price(1000L)
+                .amount(1000L)
 //                .status(PaymentStatus.READY)
                 .build();
         paymentRepository.save(payment);
@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService{
         // 주문 생성
         Order order = Order.builder()
                 .user(user)
-                .price(1000L)
+                .amount(1000L)
                 .itemName("Test item")
                 .orderUid(UUID.randomUUID().toString())
                 .payment(payment)

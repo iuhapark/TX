@@ -1,5 +1,6 @@
 package com.pear.api.payment.service;
 
+import com.pear.api.common.component.Messenger;
 import com.pear.api.common.service.CommandService;
 import com.pear.api.common.service.QueryService;
 import com.pear.api.payment.model.PaymentCallbackRequest;
@@ -19,7 +20,7 @@ public interface PaymentService extends CommandService<PaymentDto>, QueryService
         return com.pear.api.payment.model.Payment.builder()
                 .paymentUid(UUID.randomUUID().toString())
                 .itemName(dto.getItemName())
-                .price(dto.getPrice())
+                .amount(dto.getAmount())
                 .buyerEmail(dto.getBuyerEmail())
                 .buyerName(dto.getBuyerName())
                 .buyerTel(dto.getBuyerTel())
@@ -31,7 +32,7 @@ public interface PaymentService extends CommandService<PaymentDto>, QueryService
         return PaymentDto.builder()
                 .orderUid(UUID.randomUUID().toString())
                 .itemName(pay.getItemName())
-                .price(pay.getPrice())
+                .amount(pay.getAmount())
                 .buyerEmail(pay.getBuyerEmail())
                 .buyerName(pay.getBuyerName())
                 .buyerTel(pay.getBuyerTel())
@@ -39,5 +40,11 @@ public interface PaymentService extends CommandService<PaymentDto>, QueryService
                 .build();
     }
 
+    PaymentDto getBalance(Long id);
 
+    Messenger charge(PaymentDto dto);
+
+    Messenger withdraw(PaymentDto dto);
+
+    void cancel(PaymentDto dto);
 }
