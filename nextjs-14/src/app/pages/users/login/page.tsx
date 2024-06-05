@@ -15,7 +15,6 @@ import {
   getExistsUsername,
 } from "@/app/components/user/service/user-slice";
 import { jwtDecode } from "jwt-decode";
-import { PG } from "@/app/components/common/enums/PG";
 
 const SERVER = "http://localhost:8080";
 
@@ -112,13 +111,11 @@ export default function LoginPage() {
 
   return (
     <div className="flex justify-center h-screen w-full px-5 sm:px-0">
-      <div className="mt-20 w-[73vh] h-[67vh] flex bg-white  rounded-[3.5vh] shadow-2xl overflow-hidden">
+      <div className="mt-28 w-[73vh] h-[67vh] flex bg-white  rounded-[3.5vh] shadow-2xl overflow-hidden">
         <div className="w-full p-[8.5vh] justify-center items-center">
-          <p className="text-2xl text-gray-600 text-center">Sign in</p>
+          <p className="text-2xl text-black text-center font-bold">Sign in</p>
           <div className="mt-10">
-            <label className="block text-gray-700 text-sm mb-2">
-              Username
-            </label>
+            <label className="block text-gray-700 text-sm mb-2">Username</label>
             <input
               onChange={handleUsername}
               className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
@@ -128,23 +125,23 @@ export default function LoginPage() {
           </div>
           {isWrongId && len?.length > 1 && (
             <pre>
-              <h6>Incorrect ID format.</h6>
+              <p className="font-sans text-red-500 text-sm">Invalid username</p>
             </pre>
           )}
           {isTrueId && len?.length > 1 && (
             <pre>
-              <h6>Correct ID format.</h6>
+              <p className="font-sans text-blue-500 text-sm">Valid username.</p>
             </pre>
           )}
           {!beforeSubmit && !existsUsernameSelector && (
             <pre>
-              <h6>Username doesn't exist.</h6>
+              <p className="font-sans text-red-500 text-sm">
+                Username does not exist.
+              </p>
             </pre>
           )}
           <div className="mt-4">
-            <label className="block text-gray-700 text-sm mb-2">
-              Password
-            </label>
+            <label className="block text-gray-700 text-sm mb-2">Password</label>
             <input
               ref={formRef}
               onChange={handlePassword}
@@ -154,13 +151,14 @@ export default function LoginPage() {
           </div>
           {isWrongPw && (
             <pre>
-              <h6>Incorrect password. Try again.</h6>
+              <p>Invalid password. Try again.</p>
             </pre>
           )}
           <div className="flex justify-center">
             <button
               onClick={handleSubmit}
-              className="static m-11 text-white shadow-md hover:bg-gray-100 h-11 bg-black w-36 rounded-3xl">
+              className="static m-11 text-white shadow-md hover:bg-gray-100 h-11 bg-black w-36 rounded-3xl"
+            >
               Login
             </button>
           </div>
@@ -202,14 +200,15 @@ export default function LoginPage() {
               className="text-xs text-blue-500 hover:text-gray-900 w-full mt-2"
             >
               Forget Password?
-            </Link><br />
+            </Link>
+            <br />
             <Link
               href="/pages/users/join"
               className="text-xs text-gray-500 text-center w-full"
             >
-              <span className="text-blue-500">Create accout</span>
+              <span className="text-blue-500">Create account</span>
             </Link>
-            </div>
+          </div>
         </div>
       </div>
     </div>
