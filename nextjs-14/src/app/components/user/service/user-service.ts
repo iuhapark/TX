@@ -1,6 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { findAllUsersAPI, findUserByIdAPI, loginAPI, existsUsernameAPI, logoutAPI, UpdateUserAPI, deleteUserAPI, joinAPI } from "./user-api";
+import {
+  findAllUsersAPI,
+  findUserByIdAPI,
+  loginAPI,
+  existsUsernameAPI,
+  logoutAPI,
+  updateUserAPI,
+  deleteUserAPI,
+  joinAPI,
+  updateUserBalanceAPI,
+} from "./user-api";
 import { IUser } from "../model/user";
+import instance from "../../common/configs/axios-config";
 
 export const findAllUsers: any = createAsyncThunk(
   "users/findAllUsers",
@@ -27,30 +38,51 @@ export const login: any = createAsyncThunk(
 );
 
 export const join: any = createAsyncThunk(
-  "users/save",
+  "users/join",
   async (user: IUser) => await joinAPI(user)
 );
 
 export const existsUsername: any = createAsyncThunk(
   "users/existsUsername",
   async (username: string) => {
-  const data= await existsUsernameAPI(username)
-  console.log(data)
-  return data
+    const data = await existsUsernameAPI(username);
+    console.log(data);
+    return data;
   }
 );
 
 export const logout: any = createAsyncThunk(
   "users/logout",
   async () => await logoutAPI()
-)
+);
 
-export const updateUser: any = createAsyncThunk(
+export const updateUser = createAsyncThunk(
   "users/update",
-  async (id: number) => await UpdateUserAPI(id)
+  async (data: IUser) => {
+    try {
+      const response = await instance().put(`/users/modify`, data);
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw error;
+    }
+  }
 );
 
 export const deleteUser: any = createAsyncThunk(
   "users/delete",
   async (id: number) => await deleteUserAPI(id)
+);
+
+export const updateUserBalance: any = createAsyncThunk(
+  "users/updateUserBalance",
+  async (data: IUser) => {
+    try {
+      const response = await instance().put(`/users/modifyBalance`, data);
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user balance:", error);
+      throw error;
+    }
+  }
 );
