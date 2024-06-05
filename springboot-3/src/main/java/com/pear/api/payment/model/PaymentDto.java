@@ -8,10 +8,9 @@ import lombok.*;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PaymentDto {
-    private Long id;
     private String orderUid;
     private String itemName;
-    private Long price;
+    private Long amount;
     private String buyerEmail;
     private String buyerName;
     private String buyerTel;
@@ -19,11 +18,10 @@ public class PaymentDto {
     private PaymentStatus status;
 
     @Builder
-    public PaymentDto(Long id, String orderUid, String itemName, Long price, String buyerEmail, String buyerName, String buyerTel, String buyerAddr, PaymentStatus status) {
-        this.id = id;
+    public PaymentDto(String orderUid, String itemName, Long amount, String buyerEmail, String buyerName, String buyerTel, String buyerAddr, PaymentStatus status) {
         this.orderUid = orderUid;
         this.itemName = itemName;
-        this.price = price;
+        this.amount = amount;
         this.buyerEmail = buyerEmail;
         this.buyerName = buyerName;
         this.buyerTel = buyerTel;
