@@ -6,18 +6,19 @@ import com.pear.api.common.service.QueryService;
 import com.pear.api.user.model.User;
 import com.pear.api.user.model.UserDto;
 
+import java.util.Optional;
+
 public interface UserService extends CommandService<UserDto>, QueryService<UserDto> {
-    Messenger modify(UserDto user);
 
     default User dtoToEntity(UserDto dto) {
         return User.builder()
-                .id(dto.getId())
                 .username(dto.getUsername())
                 .password(dto.getPassword())
                 .name(dto.getName())
                 .phone(dto.getPhone())
                 .email(dto.getEmail())
                 .job(dto.getJob())
+                .balance(dto.getBalance())
                 .build();
     }
 
@@ -30,6 +31,7 @@ public interface UserService extends CommandService<UserDto>, QueryService<UserD
                 .phone(user.getPhone())
                 .email(user.getEmail())
                 .job(user.getJob())
+                .balance(user.getBalance())
                 .build();
     }
 
@@ -37,7 +39,13 @@ public interface UserService extends CommandService<UserDto>, QueryService<UserD
 
     Boolean logout(String accessToken);
 
+    Messenger modify(UserDto user);
+
     Boolean existsByUsername(String username);
 
     User autoRegister();
+
+    Messenger modifyBalance(UserDto user);
+
+
 }
