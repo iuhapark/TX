@@ -14,7 +14,9 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByOrderByIdDesc();
 
+    @Query("select a from users a where a.username = :username")
     Optional<User> findByUsername(String username);
+
 
     @Modifying
     @Query("update users a set a.token = :token where a.id = :id")
@@ -24,4 +26,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select count(id) as count from users where username =:username")
     Integer existsByUsername(@Param("username") String username);
 
+    @Modifying
+    @Query("update users a set a.balance = a.balance + :balance where a.id = :id")
+    void addBalanceById(@Param("id") Long id, @Param("balance") Long balance);
+
+    @Modifying
+    @Query("update users a set a.balance = a.balance - :balance where a.id = :id")
+    void subtractBalanceByIdMinus(@Param("id") Long id, @Param("balance") Long balance);
 }
