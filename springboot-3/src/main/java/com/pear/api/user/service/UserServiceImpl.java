@@ -24,9 +24,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public Messenger save(UserDto dto) {
-        entityToDto((repository.save(dtoToEntity(dto))));
+        User user = dtoToEntity(dto);
+        User savedUser = repository.save(user);
         return Messenger.builder()
-                .message(repository.existsById(dto.getId()) ? "SUCCESS" : "FAILURE")
+                .message(repository.existsById(savedUser.getId()) ? "SUCCESS" : "FAILURE")
                 .build();
     }
 
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
         return repository.existsById(id);
     }
 
+    @Transactional
     @Override
     public Messenger modify(UserDto dto) {
         Optional<User> optionalUser = repository.findById(dto.getId());
@@ -73,11 +75,11 @@ public class UserServiceImpl implements UserService {
             Long updateUserId = repository.save(modifyUser).getId();
 
             return Messenger.builder()
-                    .message("SUCCESS ID" + updateUserId)
+                    .message("SUCCESS ID: " + updateUserId)
                     .build();
         } else {
             return Messenger.builder()
-                    .message("FAIL")
+                    .message("FAILURE")
                     .build();
         }
     }
@@ -121,4 +123,34 @@ public class UserServiceImpl implements UserService {
                 .build();
         return repository.save(user);
     }
+
+    @Transactional
+    @Override
+    public Messenger modifyBalance(UserDto dto) {
+        log.info("Parameters received through modifyBalance service: " + dto);
+        if (dto.getId() != null) {
+            Optional<User> optionalUser = repository.findById(dto.getId());
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                User modifyUser = user.toBuilder()
+                        .balance(dto.getBalance())
+                        .build();
+                Long updateUserId = repository.save(modifyUser).getId();
+
+                return Messenger.builder()
+                        .message("SUCCESS ID: " + updateUserId)
+                        .build();
+            } else {
+                return Messenger.builder()
+                        .message("USER NOT FOUND")
+                        .build();
+            }
+        } else {
+            return Messenger.builder()
+                    .message("FAILURE. USER ID IS NULL")
+                    .build();
+        }
+    }
+
+
 }
