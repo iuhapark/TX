@@ -1,0 +1,19 @@
+.container {
+    margin: 20px;
+    width: auto;
+    color: black;
+    text-decoration-color: black;
+    text-decoration-line: none;
+}
+
+.table {
+    margin-right: 20;
+}
+
+.input {
+    border: none;
+    border-bottom: 1px solid black;
+    height: 25px;
+    width: 200px;
+    font-size: 12px;
+}
