@@ -37,9 +37,9 @@ public class JwtProvider {
                 .signWith(secretKey)
                 .expiration(Date.from(expiredDate))
                 .subject("pear")
+                .claim("id", dto.getId())
                 .claim("username", dto.getUsername())
                 .claim("job", dto.getJob())
-                .claim("id", dto.getId())
                 .compact();
         log.info("로그인 성공으로 발급된 토큰: " + token);
         return token;

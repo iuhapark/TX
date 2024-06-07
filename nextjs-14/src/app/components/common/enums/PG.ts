@@ -2,6 +2,7 @@ export const enum PG {
   // user
   USER = "/pages/users",
   DETAIL = `/detail`,
+  MYPAGE = `/mypage`,
 
   BOARD = "/pages/boards",
   POST = "/pages//posts",
