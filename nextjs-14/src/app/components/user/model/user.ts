@@ -6,7 +6,7 @@ export interface IUser {
   name?: string;
   phone?: string;
   job?: string;
-  addressId?: string;
+  balance?: string;
   regDate?: string;
   modDate?: string;
 }
