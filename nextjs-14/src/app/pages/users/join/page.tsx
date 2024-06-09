@@ -50,25 +50,40 @@ export default function Join({ params }: any) {
     }
   }, [dispatch, reset, params.id]);
 
-  const onSubmit: SubmitHandler<IUser> = async (data: IUser) => {
-    console.log("data: ", data);
-    try {
-      dispatch(existsUsername(data.username));
-      const response = await dispatch(join(data));
-      console.log("response: ", response);
-      console.log("response.payload: ", response.payload);
-      if (response.payload.message === "FAILURE") {
-        dispatch(join(data));
-        alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다");
-        router.push(`${PG.USER}/login`);
-      } else {
-        throw new Error("Register failed");
-      }
-    } catch (error: any) {
-      setErrorMessage(error.message || "Register failed");
-      alert("회원가입에 실패했습니다. 다시 시도해주세요");
-      console.error(error);
-    }
+  // const onSubmit: SubmitHandler<IUser> = async (data: IUser) => {
+  //   console.log("data: ", data);
+  //   try {
+  //     dispatch(existsUsername(data.username));
+  //     const response = await dispatch(join(data));
+  //     console.log("response: ", response);
+  //     console.log("response.payload: ", response.payload);
+  //     if (response.payload.message === "FAILURE") {
+  //       dispatch(join(data));
+  //       alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다");
+  //       router.push(`${PG.USER}/login`);
+  //     } else {
+  //       throw new Error("Register failed");
+  //     }
+  //   } catch (error: any) {
+  //     setErrorMessage(error.message || "Register failed");
+  //     alert("회원가입에 실패했습니다. 다시 시도해주세요");
+  //     console.error(error);
+  //   }
+  // };
+
+  const handleSubmit = () => {
+    dispatch(join(user))
+      .then((res: any) => {
+        console.log(res.payload);
+        if (res.payload.message === "SUCCESS") {
+          alert("회원가입에 성공했습니다. 로그인 페이지로 이동합니다.");
+          router.push(`${PG.USER}/login`);
+        } else if (res.payload.message === "FAILURE") {
+          alert("회원가입에 실패했습니다.");
+          window.location.reload();
+        }
+      })
+      .catch((error: any) => console.log("회원가입 중 에러 발생 : ", error));
   };
 
   const handleUsername = async (e: any) => {
@@ -134,26 +149,11 @@ export default function Join({ params }: any) {
     setUser({ ...user, job: e.target.value });
   };
 
-  const handleSubmit = () => {
-    dispatch(join(user))
-      .then((res: any) => {
-        console.log(res.payload);
-        if (res.payload.message === "SUCCESS") {
-          alert("회원가입 되셨습니다.");
-          router.push(`${PG.USER}/login`);
-        } else if (res.payload.message === "FAILURE") {
-          alert("회원가입에 실패했습니다.");
-          window.location.reload();
-        }
-      })
-      .catch((error: any) => console.log("회원가입 중 에러 발생 : ", error));
-  };
-
   return (
     <div className="flex justify-center h-screen w-full px-5 sm:px-0 pb-20">
       <form
         // onSubmit={handleSubmit(onSubmit)}
-        className="mt-28 w-[73vh] h-[67vh] flex bg-white rounded-[3.5vh] shadow-2xl overflow-y-auto"
+        className="pl-9 pr-9 mt-28 w-3/5 flex bg-white rounded-[3.5vh] shadow-2xl overflow-y-auto"
       >
         <div className="w-full p-[8.5vh] justify-center items-center">
           <p className="text-2xl text-black text-center font-bold">
