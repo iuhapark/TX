@@ -39,23 +39,14 @@ export function Menu() {
     <nav className="menu">
       <ul>
         <li>
-          <a href={`${PG.BOARD}/list`}>변호사</a>
-        </li>
-        <li>
-          <a href={`${PG.BOARD}/list`}>판례</a>
-        </li>
-        <li>
-          <a href={`${PG.BOARD}/list`}>뉴스</a>
-        </li>
-        <li>
           <a href={paymentUrl}>결제</a>
         </li>
         <li>
-          <a href={itemtUrl}>상담</a>
+          <a href={itemtUrl}>상품</a>
         </li>
-        <li>
+        {/* <li>
           <a href={`${PG.BOARD}/list`}>게시판</a>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

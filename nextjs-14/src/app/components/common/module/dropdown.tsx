@@ -5,13 +5,13 @@ import React, { useState } from "react";
 function DropdownMenu() {
   const [name, setName] = useState("");
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setName(event.target.value);
   };
 
   return (
-    <FormControl className="w-full">
-      <InputLabel id="name-label">이름</InputLabel>
+    <FormControl className="w-full rounded-2xl">
+      <InputLabel id="name-label">변호사 이름</InputLabel>
       <Select
         labelId="name-label"
         id="name-select"

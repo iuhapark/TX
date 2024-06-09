@@ -81,10 +81,10 @@ export default function Profile() {
               onClick={profileHandler}
               className="mr-4 text-black dark:text-white cursor-pointer"
             ></PermIdentityIcon>
-            <PaymentIcon 
+            {/* <PaymentIcon 
               onClick={() => router.push(`${PG.PAY}/${user.id}`)}
               className="mr-4 text-black dark:text-white cursor-pointer"
-            />
+            /> */}
             {token && (
               <LogoutIcon
                 onClick={logoutHandler}
