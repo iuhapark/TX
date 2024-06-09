@@ -19,7 +19,6 @@ public class Product {
     private String itemName;
     private Long price;
     private String duration;
-    private String date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payment_id")
