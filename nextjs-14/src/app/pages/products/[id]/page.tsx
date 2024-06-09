@@ -15,6 +15,9 @@ import { IPayment } from "@/app/components/payment/model/payment";
 import { jwtDecode } from "jwt-decode";
 import { SubmitHandler, useForm } from "react-hook-form";
 import DropdownMenu from "@/app/components/common/module/dropdown";
+import { IProduct } from "@/app/components/product/model/product";
+import { getProductById } from "@/app/components/product/service/product-slice";
+import SmartphoneIcon from "@mui/icons-material/Smartphone";
 
 declare global {
   interface Window {
@@ -22,8 +25,9 @@ declare global {
   }
 }
 
-export default function Product({ params }: any) {
+export default function Product() {
   const dispatch = useDispatch();
+  const [products, setProducts] = useState<any[]>([]);
   const [selectedProductId, setSelectedProductId] = useState<number | null>(
     null
   );
@@ -34,13 +38,11 @@ export default function Product({ params }: any) {
     formState: { errors },
   } = useForm<IUser>();
   const user: IUser = useSelector(getUserById);
+  const product: IProduct = useSelector(getProductById);
   const token = parseCookies().accessToken;
   const [transactions, setTransactions] = useState<any[]>([]);
 
   useEffect(() => {
-    const cookies = parseCookies();
-    const token = cookies.accessToken;
-
     if (token) {
       try {
         const decoded: any = jwtDecode(token);
@@ -68,6 +70,30 @@ export default function Product({ params }: any) {
     }
   }, [dispatch, user?.id]);
 
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/product/list",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (Array.isArray(response.data)) {
+          setProducts(response.data);
+        } else {
+          console.error("Products data is not an array", response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      }
+    };
+
+    loadProducts();
+  }, [token]);
+
   const requestPay = async (productPrice: number) => {
     setPrice(productPrice);
     const confirmMessage = `결제할 금액은 ${productPrice}원 입니다. 계속 진행하시겠습니까?`;
@@ -91,12 +117,11 @@ export default function Product({ params }: any) {
           pg: "html5_inicis",
           pay_method: "card",
           orderUid: new Date().getTime().toString(),
-          item_name: "product.item_name",
+          name: product?.itemName,
           amount: price,
           buyer_name: user.name,
           buyer_email: user.email,
           buyer_tel: user.phone,
-          buyer_addr: user.addressId,
         },
         async (rsp: any) => {
           if (rsp.success) {
@@ -107,12 +132,11 @@ export default function Product({ params }: any) {
             // 서버로 결제 데이터 전송
             const paymentData: IPayment = {
               payment_uid: rsp.imp_uid,
-              item_name: "product.item_name",
+              item_name: "상담",
               amount: productPrice,
               buyer_name: user.name,
               buyer_email: user.email,
               buyer_tel: user.phone,
-              buyer_addr: user.addressId,
             };
 
             dispatch(savePayment(paymentData));
@@ -120,35 +144,6 @@ export default function Product({ params }: any) {
               `http://localhost:8080/api/payment/verifyIamport/${rsp.imp_uid}`,
               rsp,
               {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
-
-            const calculateNewBalance = (
-              currentBalance: number,
-              productPrice: number
-            ): number => {
-              return currentBalance - productPrice;
-            };
-            const newBalancePrice: number = calculateNewBalance(
-              Number(user.balance) ?? 0,
-              productPrice
-            );
-
-            //서버로 업데이트된 결제 잔액 전송
-            const newBalance: IUser = {
-              ...user,
-              id: user.id,
-              balance: newBalancePrice.toString(),
-            };
-
-            const response = await axios.put(
-              `http://localhost:8080/api/users/modifyBalance`,
-              newBalance,
-              {
-                method: "PUT",
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },
@@ -165,7 +160,7 @@ export default function Product({ params }: any) {
             ]);
           } else {
             console.log("Payment failed", rsp.error_msg);
-            confirm("결제가 실패하였습니다.");
+            confirm("결제가 실패했습니다.");
           }
         }
       );
@@ -178,17 +173,6 @@ export default function Product({ params }: any) {
   useEffect(() => {
     const jquery = document.createElement("script");
     jquery.src = "http://code.jquery.com/jquery-1.12.4.min.js";
-    const iamport = document.createElement("script");
-    iamport.src = "http://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
-    document.head.appendChild(jquery);
-    document.head.appendChild(iamport);
-    return () => {
-      document.head.removeChild(jquery);
-      document.head.removeChild(iamport);
-    };
-  }, []);
-
-  useEffect(() => {
     const loadScript = (src: any, callback: any) => {
       const script = document.createElement("script");
       script.type = "text/javascript";
@@ -225,84 +209,122 @@ export default function Product({ params }: any) {
   }, []);
 
   const handleProductSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedProductId(Number(event.target.value));
+    const selectedProductId = Number(event.target.value);
+    const selectedProduct = products.find(
+      (product) => product.id === selectedProductId
+    );
+    if (selectedProduct) {
+      setSelectedProductId(selectedProductId);
+      setPrice(selectedProduct.price);
+    }
   };
 
-  const handleFormSubmit = async () => {
-    const products = {
-      1: { id: 1, item_name: "전화 상담", price: 200, time: 15 },
-      2: { id: 2, item_name: "영상 상담", price: 300, time: 30 },
-      3: { id: 3, item_name: "대면 상담", price: 500, time: 30 },
-    };
+  const handlePointUsage = async () => {
+    if (price > 0) {
+      if (Number(user.balance) >= price) {
+        const newBalance = Number(user.balance) - price;
 
-    const selectedProduct = products[selectedProductId!];
+        try {
+          const response = await axios.put(
+            `http://localhost:8080/api/users/modifyBalance`,
+            {
+              ...user,
+              balance: newBalance.toString(),
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
 
-    if (!selectedProduct) {
-      console.error("상품을 찾을 수 없습니다.");
-      return;
+          if (response.status === 200) {
+            // 사용자 정보를 업데이트하기 위해 Redux에 dispatch
+            dispatch(updateUserBalance(newBalance.toString()));
+
+            alert("결제가 완료되었습니다.");
+          } else {
+            console.error("Failed to update balance on the server");
+            alert("결제가 실패했습니다. 다시 시도해주세요.");
+          }
+        } catch (error) {
+          console.error("Error occurred while updating balance:", error);
+          alert("오류가 발생했습니다. 다시 시도해주세요.");
+        }
+      } else {
+        alert("잔액이 부족합니다. 결제를 진행할 수 없습니다.");
+      }
+    } else {
+      alert("상품을 선택해주세요.");
     }
-
-    await requestPay(selectedProduct.price);
   };
 
   return (
     <>
       <div className="flex justify-center h-screen w-full px-5 sm:px-0">
-        <form className="mt-28 w-[73vh] h-[67vh] flex bg-white rounded-[3.5vh] shadow-2xl overflow-y-auto">
+        <p className="text-xl text-black text-center font-bold">Shop</p>
+        <form className="mt-28 w-[110vh] h-[67vh] flex bg-white">
+          <div className="w-full pt-[8.5vh] justify-center items-center">
+            <div className="mt-6 mb-8 pl-12 text-2xl">
+              상담 항목을 선택하세요.
+            </div>
+            <div className="flex justify-start pl-12 gap-5">
+              {products.length === 0 ? (
+                <p className="mt-10">상품이 존재하지 않습니다.</p>
+              ) : (
+                products.map((product) => (
+                  <label
+                    key={product.id}
+                    className="w-[30vh] h-[48.2vh] shadow-2xl hover:relative inline-flex items-end justify-center text-center p-7 mb-2 me-2 overflow-hidden text-sm font-medium text-black-700 rounded-[3.5vh]
+                  hover:text-blue hover:shadow-lg hover:bg-gradient-to-br from-whie-100 to-gray-100 cursor-pointer"
+                    // style={{
+                    //   backgroundImage: `url("/img/mok.jpg")`,
+                    //   backgroundSize: "cover",
+                    //   backgroundRepeat: "no-repeat",
+                    //   backgroundPosition: "center",
+                    // }}
+                  >
+                    <input
+                      type="radio"
+                      name="product"
+                      value={product.id}
+                      onChange={handleProductSelect}
+                      className="form-radio h-2 w-2 mr-2 text-none cursor-pointer"
+                    />
+                    <br />
+                    {product.item_name} <br />
+                    {product.duration} <br />
+                    {product.price}pt
+                  </label>
+                ))
+              )}
+            </div>
+          </div>
+        </form>
+        <form className="mt-28 w-[47vh] h-[67vh] flex bg-white">
           <div className="w-full p-[8.5vh] justify-center items-center">
-            <p className="text-2xl text-black text-center font-bold">Shop</p>{" "}
-            <p className="text-xl font-bold text-gray-700 mt-14">Order info</p>
-            <div className="mt-6 w-[20vh] h-[20vh] grid grid-cols-2 gap-x-4 gap-y-2">
-              <p className="text-gray-700 font-bold">Balance</p>
-              <p>{user?.balance} pt</p>
-            </div>
-            <p className="text-xl font-bold text-gray-700">Item</p>
-            <div className="text-gray-700 text-lg mt-6">
-              상담을 진행할 변호사를 선택하세요.
-            </div>
-            <div className="flex flex-col mt-4">
-              <label>
-                <input
-                  type="radio"
-                  name="product"
-                  value="1"
-                  onChange={handleProductSelect}
-                />
-                전화 상담 (200원)
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="product"
-                  value="2"
-                  onChange={handleProductSelect}
-                />
-                영상 상담 (300원)
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="product"
-                  value="3"
-                  onChange={handleProductSelect}
-                />
-                대면 상담 (500원)
-              </label>
-            </div>
-            <div className="flex flex-col">
-              <div className="pt-5 flex items-center justify-between">
-                <DropdownMenu />
+            <div className="mt-6 mb-8 text-2xl">변호사를 선택하세요.</div>
+            <DropdownMenu />
+            <div className="flex flex-col mt-10">
+              <div className="mt-4 grid grid-cols-2 grid-rows-2">
+                <p className="text-sm mb-2">잔액 {user?.balance} pt</p>
+              </div>
+              <div className="flex gap-5 justify-end mt-5">
                 <span
-                  className="ml-4 text-white shadow-md hover:bg-gray-100 h-[6vh] bg-black w-36 rounded-2xl items-center justify-center flex cursor-pointer"
-                  onClick={() => requestPay(price)} //TODO 변경
+                  className="mt-40 text-white shadow-md hover:bg-blue-400 h-11 bg-black w-[15vh] rounded-3xl items-center justify-center flex cursor-pointer"
+                  onClick={() => requestPay(price)}
                 >
-                  선택
+                  Buy
+                </span>
+                <span
+                  className="mt-40 text-white shadow-md hover:bg-blue-400 h-11 bg-black w-[15vh] rounded-3xl items-center justify-center flex cursor-pointer"
+                  onClick={handlePointUsage}
+                >
+                  Pay
                 </span>
               </div>
+              <svg className="h-20"> </svg>
             </div>
-            <p className="text-xs text-blue-500 mt-2 mb-6">
-              Current Balance: {user?.balance} pt
-            </p>
           </div>
         </form>
       </div>
