@@ -13,7 +13,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { destroyCookie, parseCookies } from "nookies";
 import { jwtDecode } from "jwt-decode";
-import { PG } from "@/app/components/common/enums/PG";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function UserDetail() {
   const router = useRouter();
@@ -26,13 +26,13 @@ export default function UserDetail() {
     reset,
     formState: { errors },
   } = useForm<IUser>();
-  const user: IUser = useSelector(getUserById);
 
+  const user: IUser = useSelector(getUserById);
   useEffect(() => {
     const decoded: any = jwtDecode(token);
-    if (token !== "") {
+    if (token !== "" && user?.id) {
       console.log("user id in Mypage : " + decoded.id);
-      fetch(`http://localhost:8080/api/users/detail?id=${user?.id}`, {
+      fetch(`http://localhost:8080/api/users/detail?id=${user.id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${parseCookies().accessToken}`,
@@ -40,12 +40,11 @@ export default function UserDetail() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("MY-INFO: data: " + JSON.stringify(data));
           reset(data);
         })
         .catch((error) => console.log("error: ", error));
     } else {
-      console.log("user id is " + user.id);
+      console.log("user id is " + user?.id);
     }
   }, [dispatch, reset, user?.id]);
 
@@ -69,27 +68,22 @@ export default function UserDetail() {
               : alert("Delete success")
           )
           .catch((error: any) => alert("Delete failed"))
-          .finally(() => router.push(`/`));
+          .finally(() => {
+            destroyCookie(null, "accessToken");
+            router.push(`/`);
+          });
       }
     }
   };
 
-  const payHandler = () => {
-    router.push(`${PG.PAY}/${user.id}`);
-  };
-
   return (
-    <div className="flex justify-center h-screen w-full px-5 sm:px-0 pb-20">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="pl-9 pr-9 mt-28 w-4/5 flex bg-white rounded-[3.5vh] shadow-2xl overflow-y-auto"
-      >
+    <div className="flex justify-center h-screen w-full px-5 sm:px-0 gap-10">
+      <div className="mt-28 w-[54vh] h-[67vh] flex bg-white rounded-[3.5vh] shadow-2xl overflow-x-auto">
         <div className="w-full p-[8.5vh] justify-center items-center">
-          <p className="text-2xl text-black text-center mb-10 font-bold">My Page</p>{" "}
-          <p className="text-gray-700 text-lg mt-10 mb-14">
-            Welcome, {user?.name || ""}
+          <AccountCircleIcon sx={{ fontSize: 145 }} className="text-blue-400" />
+          <p className="text-3xl font-bold text-gray-700 mb-20 mt-7">
+            {user?.name || ""}
           </p>
-          <p className="text-xl font-bold text-gray-700 mt-14">User info</p>
           <div className="mt-6 w-full grid grid-cols-2 mb-10 gap-y-7">
             <div>
               <p className="text-gray-700 font-bold">Username</p>
@@ -108,13 +102,15 @@ export default function UserDetail() {
               <p>{user?.email || ""}</p>
             </div>
           </div>
-          <div className="flex w-full">
-            <span className="font-bold cursor-pointer" onClick={payHandler}>
-              My Order →
-            </span>
-          </div>
-          <p className="text-xl font-bold text-gray-700 mt-16">Update info</p>
-          <div className="mt-6 mb-4">
+        </div>
+      </div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-28 w-[73vh] h-[67vh] flex bg-white rounded-[3.5vh] shadow-2xl overflow-hidden"
+      >
+        <div className="w-full p-[8.5vh] justify-center items-center overflow-y-auto">
+          <p className="text-xl font-bold text-gray-700 mb-20">Update info</p>
+          <div className="mb-4">
             <label className="block text-gray-700 text-sm mb-2">Username</label>
             <input
               type="text"
@@ -164,10 +160,10 @@ export default function UserDetail() {
               {...register("job")}
             />
           </div>
-          <div className="flex justify-between mt-10">
+          <div className="flex justify-center mt-10">
             <button
               type="submit"
-              className="static text-white shadow-md hover:bg-gray-100 h-11 bg-black w-36 rounded-3xl"
+              className="static  text-white shadow-md hover:bg-gray-100 h-11 bg-black w-36 rounded-3xl"
             >
               Save changes
             </button>
@@ -175,11 +171,10 @@ export default function UserDetail() {
           <button
             type="button"
             onClick={deleteHandler}
-            className="relative text-xs text-gray-500 text-center w-full"
+            className="static text-xs text-gray-500 text-center w-full"
           >
             Delete account
           </button>
-          <svg className="h-20"> </svg>
         </div>
       </form>
     </div>
