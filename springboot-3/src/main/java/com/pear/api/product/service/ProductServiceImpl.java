@@ -16,6 +16,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
+    @Transactional
     @Override
     public Messenger save(ProductDto productDto) {
         entityToDto((productRepository.save(dtoToEntity(productDto))));
@@ -33,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
                 .build();
     }
 
+    @Transactional
     @Override
     public Messenger modify(ProductDto productDto) {
         Optional<Product> optionalProduct = productRepository.findById(productDto.getId());
@@ -51,21 +53,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> findAll() {
-        return null;
+        return productRepository.findAllByOrderByIdAsc().stream().map(i -> entityToDto(i)).toList();
     }
 
     @Override
     public Optional<ProductDto> findById(Long id) {
-        return Optional.empty();
+        return productRepository.findById(id).map(i -> entityToDto(i));
     }
 
     @Override
     public Messenger count() {
-        return null;
+        return Messenger.builder()
+                .message(productRepository.count() + "").build();
     }
 
     @Override
     public boolean existsById(Long id) {
-        return false;
+        return productRepository.existsById(id);
     }
 }
