@@ -1,6 +1,6 @@
 export interface ProductColumn {
   id?: number;
-  itemName?: string;
+  item_name?: string;
   price?: string;
   duration?: string;
   array?: [];
