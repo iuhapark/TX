@@ -26,7 +26,7 @@ export default function ProductColumns (): GridColDef[] {
             headerName: 'Name',
             renderCell: ({row}:CellType) => 
             <Typography textAlign="center" sx={{fontSize:"1.2rem"}}><Link href={`${PG.ITEM}/detail/${row.id}`} > 
-            {row.itemName}
+            {row.item_name}
            </Link>
            </Typography>
         },
