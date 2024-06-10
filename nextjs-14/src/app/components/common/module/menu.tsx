@@ -44,7 +44,7 @@ function useMenuAnimation(isOpen: boolean) {
         { d: isOpen ? "M 3 2.5 L 17 16.346" : "M 2 16.346 L 20 16.346" },
         { at: "<" }
       ],
-      ...menuAnimations
+      // ...menuAnimations
     ]);
     
     if (isOpen) {
