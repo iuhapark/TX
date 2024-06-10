@@ -18,6 +18,7 @@ function DropdownMenu() {
         value={name}
         label="name"
         onChange={handleChange}
+        className="dark:text-white"
       >
         <MenuItem value="김시온">김시온</MenuItem>
         <MenuItem value="김호주">김호주</MenuItem>

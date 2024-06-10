@@ -37,11 +37,54 @@ body {
   left: 0;
   bottom: 0;
   width: 220px;
-  background: var(--background);
   padding-top: 80px;
   transform: translateX(-100%);
   will-change: transform;
   font-family: "Roboto", sans-serif;
+}
+
+form {
+  font-family: "Roboto", sans-serif;
+  color: var(--text-color);
+  margin-top: 7rem;
+  display: flex;
+  border-radius: 3.5vh;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+  form {
+  }
+}
+
+
+button {
+  color: white;
+  background-color: var(--text-color);
+  color: var(--background);
+  height: 2.75rem;
+  width: 13vh;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 15px;
+  font-weight: 200;
+  font-family: "Roboto", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  button {
+    background-color: var(--text-color);
+    color: var(--background);
+  }
+}
+
+button:hover {
+  background-color: #f3f4f6; /* hover:bg-gray-100 in Tailwind CSS */
 }
 
 ul {
@@ -60,7 +103,7 @@ li {
   will-change: transform, opacity, filter;
 }
 
-button {
+ol {
   outline: none;
   border: none;
   -webkit-user-select: none;

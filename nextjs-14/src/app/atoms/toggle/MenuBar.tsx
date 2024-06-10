@@ -11,7 +11,7 @@ const Path = (props: any) => (
 );
 
 export const MenuBar = ({ bar }: any) => (
-  <button onClick={bar} className="top-lg lg:py-[3rem] left-1">
+  <ol onClick={bar} className="top-lg lg:py-[3rem] left-1">
     <svg width="19" height="19" viewBox="0 0 23 18">
       <Path
         d="M 2 2.5 L 20 2.5"
@@ -31,5 +31,5 @@ export const MenuBar = ({ bar }: any) => (
         }}
       />
     </svg>
-  </button>
+  </ol>
 );
