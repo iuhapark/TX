@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public Messenger save(UserDto dto) {
+        log.info("Parameters received through save service: " + dto);
         User user = dtoToEntity(dto);
         User savedUser = repository.save(user);
         return Messenger.builder()

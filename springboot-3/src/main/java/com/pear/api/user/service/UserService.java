@@ -6,8 +6,6 @@ import com.pear.api.common.service.QueryService;
 import com.pear.api.user.model.User;
 import com.pear.api.user.model.UserDto;
 
-import java.util.Optional;
-
 public interface UserService extends CommandService<UserDto>, QueryService<UserDto> {
 
     default User dtoToEntity(UserDto dto) {

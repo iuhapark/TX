@@ -18,7 +18,7 @@ import java.util.List;
 @ToString(exclude = {"id"})
 public class User extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // database will generate the id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
