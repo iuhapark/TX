@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserById } from "@/app/components/user/service/user-slice";
 import {
-  findUserById,
   updateUser,
   deleteUser,
 } from "@/app/components/user/service/user-service";
@@ -78,65 +77,80 @@ export default function UserDetail() {
 
   return (
     <div className="flex justify-center h-screen w-full px-5 sm:px-0 gap-10">
-      <div className="mt-28 w-[54vh] h-[67vh] flex bg-white rounded-[3.5vh] shadow-2xl overflow-x-auto">
+      <div className="mt-28 w-[54vh] h-[67vh] flex rounded-[3.5vh] shadow-2xl overflow-x-auto">
         <div className="w-full p-[8.5vh] justify-center items-center">
           <AccountCircleIcon sx={{ fontSize: 145 }} className="text-blue-400" />
-          <p className="text-3xl font-bold text-gray-700 mb-20 mt-7">
+          <p className="text-3xl font-bold text-gray-700 dark:text-white mb-20 mt-7">
             {user?.name || ""}
           </p>
           <div className="mt-6 w-full grid grid-cols-2 mb-10 gap-y-7">
             <div>
-              <p className="text-gray-700 font-bold">Username</p>
-              <p>{user?.username || ""}</p>
+              <p className="light:text-gray-700 dark:text-white font-bold">
+                Username
+              </p>
+              <p className="dark:text-white">{user?.username || ""}</p>
             </div>
             <div>
-              <p className="text-gray-700 font-bold">Name</p>
-              <p>{user?.name || ""}</p>
+              <p className="light:text-gray-700 dark:text-white font-bold">
+                Name
+              </p>
+              <p className="dark:text-white">{user?.name || ""}</p>
             </div>
             <div>
-              <p className="text-gray-700 font-bold">Phone</p>
-              <p>{user?.phone || ""}</p>
+              <p className="light:text-gray-700 dark:text-white font-bold">
+                Phone
+              </p>
+              <p className="dark:text-white">{user?.phone || ""}</p>
             </div>
             <div>
-              <p className="text-gray-700 font-bold">Email</p>
-              <p>{user?.email || ""}</p>
+              <p className="light:text-gray-700 dark:text-white font-bold">
+                Email
+              </p>
+              <p className="dark:text-white">{user?.email || ""}</p>
             </div>
           </div>
         </div>
       </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mt-28 w-[73vh] h-[67vh] flex bg-white rounded-[3.5vh] shadow-2xl overflow-hidden"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="w-[73vh] h-[67vh]">
         <div className="w-full p-[8.5vh] justify-center items-center overflow-y-auto">
-          <p className="text-xl font-bold text-gray-700 mb-20">Update info</p>
+          <p className="text-xl font-bold light:text-gray-700 mb-20 text-center">
+            Update info
+          </p>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm mb-2">Username</label>
+            <label className="block light:text-gray-700 text-sm mb-2">
+              Username
+            </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 bg-gray-200 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-none"
+              className="h-[6vh] text-gray-700  bg-gray-200 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-none"
               value={user && user.username ? user.username : ""}
               readOnly
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm mb-2">Password</label>
+            <label className="block light:text-gray-700 text-sm mb-2">
+              Password
+            </label>
             <input
               type="password"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
               {...register("password")}
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm mb-2">Email</label>
+            <label className="block light:text-gray-700 text-sm mb-2">
+              Email
+            </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
               {...register("email")}
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm mb-2">Name</label>
+            <label className="block light:text-gray-700 text-sm mb-2">
+              Name
+            </label>
             <input
               type="text"
               className="h-[6vh] text-gray-700 bg-gray-200 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-none"
@@ -145,7 +159,9 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm mb-2">Phone</label>
+            <label className="block light:text-gray-700 text-sm mb-2">
+              Phone
+            </label>
             <input
               type="text"
               className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
@@ -153,7 +169,9 @@ export default function UserDetail() {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm mb-2">Job</label>
+            <label className="block light:text-gray-700  text-sm mb-2">
+              Job
+            </label>
             <input
               type="text"
               className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
@@ -161,20 +179,14 @@ export default function UserDetail() {
             />
           </div>
           <div className="flex justify-center mt-10">
-            <button
-              type="submit"
-              className="static  text-white shadow-md hover:bg-gray-100 h-11 bg-black w-36 rounded-3xl"
-            >
-              Save changes
-            </button>
+            <button type="submit">Save changes</button>
           </div>
-          <button
-            type="button"
+          <div
             onClick={deleteHandler}
-            className="static text-xs text-gray-500 text-center w-full"
+            className="cursor-pointer mt-6 static text-xs light:text-gray-500 text-center w-full"
           >
             Delete account
-          </button>
+          </div>
         </div>
       </form>
     </div>

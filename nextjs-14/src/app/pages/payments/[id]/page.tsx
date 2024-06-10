@@ -13,9 +13,6 @@ import { getUserById } from "@/app/components/user/service/user-slice";
 import { parseCookies } from "nookies";
 import { IPayment } from "@/app/components/payment/model/payment";
 import { jwtDecode } from "jwt-decode";
-import { PG } from "@/app/components/common/enums/PG";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { updateUserBalanceAPI } from "@/app/components/user/service/user-api";
 
 declare global {
   interface Window {
@@ -26,11 +23,6 @@ declare global {
 export default function Payment({ params }: any) {
   const dispatch = useDispatch();
   const [amount, setAmount] = useState<number>(0);
-  const {
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<IUser>();
   const user: IUser = useSelector(getUserById);
   const token = parseCookies().accessToken;
   const [transactions, setTransactions] = useState<any[]>([]);
@@ -61,7 +53,7 @@ export default function Payment({ params }: any) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("MY-INFO: data: " + JSON.stringify(data));
+          dispatch(updateUserBalance(data));
         })
         .catch((error) => console.log("error: ", error));
     }
@@ -90,12 +82,11 @@ export default function Payment({ params }: any) {
           pg: "html5_inicis",
           pay_method: "card",
           orderUid: new Date().getTime().toString(),
-          item_name: "충전 포인트",
+          name: "포인트",
           amount: amount,
           buyer_name: user.name,
           buyer_email: user.email,
           buyer_tel: user.phone,
-          buyer_addr: user.addressId,
         },
         async (rsp: any) => {
           if (rsp.success) {
@@ -106,12 +97,11 @@ export default function Payment({ params }: any) {
             // 서버로 결제 데이터 전송
             const paymentData: IPayment = {
               payment_uid: rsp.imp_uid,
-              item_name: "충전 포인트",
+              item_name: "포인트",
               amount: chargeAmount,
               buyer_name: user.name,
               buyer_email: user.email,
               buyer_tel: user.phone,
-              buyer_addr: user.addressId,
             };
 
             dispatch(savePayment(paymentData));
@@ -217,6 +207,7 @@ export default function Payment({ params }: any) {
         });
       });
     });
+
     return () => {
       const scripts = document.querySelectorAll('script[src^="https://"]');
       scripts.forEach((script) => script.remove());
@@ -225,52 +216,49 @@ export default function Payment({ params }: any) {
 
   return (
     <>
-      <div className="flex justify-center h-screen w-full pb-20">
-        <form className="pl-9 pr-9 mt-20 w-2/5 flex bg-white rounded-[3.5vh] shadow-2xl overflow-y-auto">
+      <div className="flex justify-center h-screen w-full px-5 sm:px-0">
+        <div className="w-[73vh] h-[67vh] overflow-hidde mt-28 flex rounded-[3.5vh] shadow-2xl overflow-x-auto">
           <div className="w-full p-[8.5vh] justify-center items-center">
-            <p className="text-2xl text-black text-center mb-10 font-bold">My 0rder</p>{" "}
-            <p className="text-xl font-bold text-gray-700 mt-14">Order info</p>
-            <div className="mt-6 w-[20vh] h-[20vh] grid grid-cols-2 gap-x-4 gap-y-2">
-              <p className="text-gray-700 font-bold">Balance</p>
-              <p>{user?.balance} pt</p>
+            <div className="dark:text-white text-2xl text-center mb-10 font-bold font-sans">
+              My 0rder
+            </div>
+            <p className="text-xl font-bold text-gray-700 dark:text-white mt-14 mb-20">
+              Order info
+            </p>
+
+            <div className="grid w-1/2 grid-cols-2">
+              <p className="text-gray-700 dark:text-white font-bold text-[18px]">
+                잔액
+              </p>
+              <p className="text-[18px] dark:text-white">{user?.balance} 포인트</p>
             </div>
             {!showProfile && (
-              <span
-                className="text-white shadow-md hover:bg-gray-100 h-[6vh] bg-black w-36 rounded-2xl items-center justify-center flex cursor-pointer"
+              <button
+                className="items-center justify-center flex mt-16 mx-auto"
                 onClick={() => setShowProfile(true)}
               >
-                Charge Point
-              </span>
+                Charge
+              </button>
             )}
             {showProfile && (
-              <div className="flex items-center">
-                <div>
-                  <div className="text-gray-700 text-lg mt-6">
-                    충전할 포인트를 입력하세요.
-                  </div>
-                  <div className="pt-5 flex">
-                    <input
-                      type="number"
-                      value={amount}
-                      onChange={(e) => setAmount(parseInt(e.target.value, 10))}
-                      className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
-                      placeholder="결제 금액을 입력하세요"
-                    />
-                  </div>
-                  <span
-                    className="text-white shadow-md hover:bg-gray-100 h-[6vh] bg-black w-36 rounded-2xl items-center justify-center flex cursor-pointer mt-4"
-                    onClick={() => requestPay(amount)}
-                  >
-                    Confirm
-                  </span>
-                </div>
+              <div className="flex items-center mt-16">
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(parseInt(e.target.value, 10))}
+                  className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-3/4 focus:outline-2 focus:outline-blue-500 mr-4"
+                  placeholder="Enter amount"
+                />
+                <button
+                  className="static text-white bg-blue-400 items-center justify-center flex cursor-pointer"
+                  onClick={() => requestPay(amount)}
+                >
+                  Confirm
+                </button>
               </div>
             )}
-            {/* <p className="text-xs text-blue-500 mt-2 mb-6">
-              Current Balance: {user?.balance} pt
-            </p> */}
           </div>
-        </form>
+        </div>
       </div>
     </>
   );

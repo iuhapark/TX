@@ -13,11 +13,10 @@ import { getUserById } from "@/app/components/user/service/user-slice";
 import { parseCookies } from "nookies";
 import { IPayment } from "@/app/components/payment/model/payment";
 import { jwtDecode } from "jwt-decode";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import DropdownMenu from "@/app/components/common/module/dropdown";
 import { IProduct } from "@/app/components/product/model/product";
 import { getProductById } from "@/app/components/product/service/product-slice";
-import SmartphoneIcon from "@mui/icons-material/Smartphone";
 
 declare global {
   interface Window {
@@ -117,7 +116,7 @@ export default function Product() {
           pg: "html5_inicis",
           pay_method: "card",
           orderUid: new Date().getTime().toString(),
-          name: product?.itemName,
+          name: product?.item_name,
           amount: price,
           buyer_name: user.name,
           buyer_email: user.email,
@@ -132,7 +131,7 @@ export default function Product() {
             // 서버로 결제 데이터 전송
             const paymentData: IPayment = {
               payment_uid: rsp.imp_uid,
-              item_name: "상담",
+              item_name: product.item_name,
               amount: productPrice,
               buyer_name: user.name,
               buyer_email: user.email,
@@ -208,17 +207,6 @@ export default function Product() {
     };
   }, []);
 
-  const handleProductSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedProductId = Number(event.target.value);
-    const selectedProduct = products.find(
-      (product) => product.id === selectedProductId
-    );
-    if (selectedProduct) {
-      setSelectedProductId(selectedProductId);
-      setPrice(selectedProduct.price);
-    }
-  };
-
   const handlePointUsage = async () => {
     if (price > 0) {
       if (Number(user.balance) >= price) {
@@ -259,13 +247,35 @@ export default function Product() {
     }
   };
 
+  const handleProductSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedProductId = Number(event.target.value);
+    const selectedProduct = products.find(
+      (product) => product.id === selectedProductId
+    );
+    if (selectedProduct) {
+      setSelectedProductId(selectedProductId);
+      setPrice(selectedProduct.price);
+    }
+  };
+
+  const getImageForProduct = (productId: number): string => {
+    if (productId === 1) {
+      return "/img/call.jpg";
+    } else if (productId === 2) {
+      return "/img/video-call.jpeg";
+    } else if (productId === 3) {
+      return "/img/meet-up.jpg";
+    } else {
+      return "/img/call.jpg";
+    }
+  };
+
   return (
     <>
       <div className="flex justify-center h-screen w-full px-5 sm:px-0">
-        <p className="text-xl text-black text-center font-bold">Shop</p>
-        <form className="mt-28 w-[110vh] h-[67vh] flex bg-white">
+        <div className="mt-28 w-[90vh] h-[67vh] flex">
           <div className="w-full pt-[8.5vh] justify-center items-center">
-            <div className="mt-6 mb-8 pl-12 text-2xl">
+            <div className="mt-6 mb-8 pl-12 text-2xl dark:text-white">
               상담 항목을 선택하세요.
             </div>
             <div className="flex justify-start pl-12 gap-5">
@@ -275,21 +285,21 @@ export default function Product() {
                 products.map((product) => (
                   <label
                     key={product.id}
-                    className="w-[30vh] h-[48.2vh] shadow-2xl hover:relative inline-flex items-end justify-center text-center p-7 mb-2 me-2 overflow-hidden text-sm font-medium text-black-700 rounded-[3.5vh]
-                  hover:text-blue hover:shadow-lg hover:bg-gradient-to-br from-whie-100 to-gray-100 cursor-pointer"
-                    // style={{
-                    //   backgroundImage: `url("/img/mok.jpg")`,
-                    //   backgroundSize: "cover",
-                    //   backgroundRepeat: "no-repeat",
-                    //   backgroundPosition: "center",
-                    // }}
+                    className="w-[24vh] h-[48.2vh] shadow-2xl hover:relative inline-flex items-end justify-center text-center p-7 mb-2 me-2 overflow-hidden text-sm font-medium text-black-700 rounded-[3.5vh] hover:text-white hover:shadow-lg hover:bg-gradient-to-br from-whie-100 to-gray-100 cursor-pointer"
+                    style={{
+                      backgroundImage: `url(${getImageForProduct(product.id)})`,
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                    }}
                   >
                     <input
                       type="radio"
                       name="product"
                       value={product.id}
                       onChange={handleProductSelect}
-                      className="form-radio h-2 w-2 mr-2 text-none cursor-pointer"
+                      className="h-4 w-4 cursor-pointer"
+                      // className="absolute opacity-0 h-0 w-0 cursor-pointer"
                     />
                     <br />
                     {product.item_name} <br />
@@ -300,33 +310,37 @@ export default function Product() {
               )}
             </div>
           </div>
-        </form>
-        <form className="mt-28 w-[47vh] h-[67vh] flex bg-white">
+        </div>
+        <div className="mt-28 w-[47vh] h-[67vh] flex shadow-none">
           <div className="w-full p-[8.5vh] justify-center items-center">
-            <div className="mt-6 mb-8 text-2xl">변호사를 선택하세요.</div>
+            <div className="mt-6 mb-8 text-2xl dark:text-white">
+              변호사를 선택하세요.
+            </div>
             <DropdownMenu />
             <div className="flex flex-col mt-10">
               <div className="mt-4 grid grid-cols-2 grid-rows-2">
-                <p className="text-sm mb-2">잔액 {user?.balance} pt</p>
+                <p className="text-[18px] mb-2 dark:text-white">
+                  잔액 {user?.balance} 포인트
+                </p>
               </div>
               <div className="flex gap-5 justify-end mt-5">
-                <span
-                  className="mt-40 text-white shadow-md hover:bg-blue-400 h-11 bg-black w-[15vh] rounded-3xl items-center justify-center flex cursor-pointer"
+                <button
+                  className="mt-40 hover:bg-blue-400 items-center justify-center flex"
                   onClick={() => requestPay(price)}
                 >
-                  Buy
-                </span>
-                <span
-                  className="mt-40 text-white shadow-md hover:bg-blue-400 h-11 bg-black w-[15vh] rounded-3xl items-center justify-center flex cursor-pointer"
+                  Pay
+                </button>
+                <button
+                  className="mt-40 hover:bg-blue-400 items-center justify-center flex"
                   onClick={handlePointUsage}
                 >
-                  Pay
-                </span>
+                  Use point
+                </button>
               </div>
               <svg className="h-20"> </svg>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </>
   );

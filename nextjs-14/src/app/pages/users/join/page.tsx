@@ -7,16 +7,12 @@ import {
   join,
 } from "@/app/components/user/service/user-service";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { PG } from "@/app/components/common/enums/PG";
-import {
-  getExistsUsername,
-  getAuth,
-} from "@/app/components/user/service/user-slice";
-import { NextPage } from "next";
+import { getExistsUsername } from "@/app/components/user/service/user-slice";
 
 export default function Join({ params }: any) {
   const router = useRouter();
@@ -27,6 +23,10 @@ export default function Join({ params }: any) {
   const [isTrueId, setIsTrueId] = useState(false);
   const [isTruePw, setIsTruePw] = useState(false);
   const [isWrongPw, setIsWrongPw] = useState(false);
+  const [isTrueEmail, setIsTrueEmail] = useState(false);
+  const [isWrongEmail, setIsWrongEmail] = useState(false);
+  const [isTruePhone, setIsTruePhone] = useState(false);
+  const [isWrongPhone, setIsWrongPhone] = useState(false);
   const [beforeSubmit, setBeforeSubmit] = useState(true);
   const [len, setLen] = useState("");
   const existsUsernameSelector = useSelector(getExistsUsername);
@@ -50,40 +50,19 @@ export default function Join({ params }: any) {
     }
   }, [dispatch, reset, params.id]);
 
-  // const onSubmit: SubmitHandler<IUser> = async (data: IUser) => {
-  //   console.log("data: ", data);
-  //   try {
-  //     dispatch(existsUsername(data.username));
-  //     const response = await dispatch(join(data));
-  //     console.log("response: ", response);
-  //     console.log("response.payload: ", response.payload);
-  //     if (response.payload.message === "FAILURE") {
-  //       dispatch(join(data));
-  //       alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다");
-  //       router.push(`${PG.USER}/login`);
-  //     } else {
-  //       throw new Error("Register failed");
-  //     }
-  //   } catch (error: any) {
-  //     setErrorMessage(error.message || "Register failed");
-  //     alert("회원가입에 실패했습니다. 다시 시도해주세요");
-  //     console.error(error);
-  //   }
-  // };
-
-  const handleSubmit = () => {
-    dispatch(join(user))
-      .then((res: any) => {
-        console.log(res.payload);
-        if (res.payload.message === "SUCCESS") {
-          alert("회원가입에 성공했습니다. 로그인 페이지로 이동합니다.");
-          router.push(`${PG.USER}/login`);
-        } else if (res.payload.message === "FAILURE") {
-          alert("회원가입에 실패했습니다.");
-          window.location.reload();
-        }
-      })
-      .catch((error: any) => console.log("회원가입 중 에러 발생 : ", error));
+  const handleSubmit = async () => {
+    try {
+      const response = await dispatch(join(user));
+      if (response.payload.message === "SUCCESS") {
+        alert("회원가입에 성공했습니다. 로그인 페이지로 이동합니다.");
+        router.push(`${PG.USER}/login`);
+      } else if (response.payload.message === "FAILURE") {
+        alert("회원가입에 실패했습니다.");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("회원가입 중 에러 발생 : ", error);
+    }
   };
 
   const handleUsername = async (e: any) => {
@@ -116,7 +95,7 @@ export default function Join({ params }: any) {
 
   const handlePassword = (e: any) => {
     const PW_CHECK =
-      /^[a-zA-Z][a-zA-Z0-9!@#$%^&*()_+[\]{};':"\\|,.<>/?]{3,9}$/g;
+      /^[a-zA-Z][a-zA-Z0-9!@#$%^&*()_+[\]{};':"\\|,.<>/?]{2,9}$/g;
     setLen(e.target.value);
     setBeforeSubmit(true);
 
@@ -132,9 +111,20 @@ export default function Join({ params }: any) {
       setIsTruePw(false);
     }
   };
-  
+
   const handleEmail = (e: any) => {
     setUser({ ...user, email: e.target.value });
+    const EMAIL_CHECK = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    setBeforeSubmit(true);
+
+    if (EMAIL_CHECK.test(e.target.value)) {
+      setIsWrongEmail(false);
+      setIsTrueEmail(true);
+    } else {
+      setIsWrongEmail(true);
+      setIsTrueEmail(false);
+    }
   };
 
   const handleName = (e: any) => {
@@ -143,6 +133,17 @@ export default function Join({ params }: any) {
 
   const handlePhone = (e: any) => {
     setUser({ ...user, phone: e.target.value });
+    const PHONE_CHECK = /^\d{3}-\d{4}-\d{4}$/;
+
+    setBeforeSubmit(true);
+
+    if (PHONE_CHECK.test(e.target.value)) {
+      setIsWrongPhone(false);
+      setIsTruePhone(true);
+    } else {
+      setIsWrongPhone(true);
+      setIsTruePhone(false);
+    }
   };
 
   const handleJob = (e: any) => {
@@ -153,19 +154,22 @@ export default function Join({ params }: any) {
     <div className="flex justify-center h-screen w-full px-5 sm:px-0 pb-20">
       <form
         // onSubmit={handleSubmit(onSubmit)}
-        className="pl-9 pr-9 mt-28 w-3/5 flex bg-white rounded-[3.5vh] shadow-2xl overflow-y-auto"
+        className="w-[70vh] flex overflow-y-auto"
       >
         <div className="w-full p-[8.5vh] justify-center items-center">
-          <p className="text-2xl text-black text-center font-bold">
+          <p className="text-2xl text-center font-bold mb-20">
             Create your account
           </p>
           <div className="mt-10 mb-4">
-            <label htmlFor="username" className="block text-gray-700 text-sm">
+            <label
+              htmlFor="username"
+              className="block text-gray-700 dark:text-white text-sm"
+            >
               Username
             </label>
             <input
               type="username"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleUsername}
               // {...register("username", { required: "Username is required" })}
             />
@@ -192,12 +196,15 @@ export default function Join({ params }: any) {
             )}
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 text-sm">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 dark:text-white text-sm"
+            >
               Password
             </label>{" "}
             <input
               type="password"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handlePassword}
               // {...register("password", { required: "Password is required" })}
             />
@@ -219,12 +226,15 @@ export default function Join({ params }: any) {
             )}
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 text-sm">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 dark:text-white text-sm"
+            >
               Email
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleEmail}
               // {...register("email", {
               //   required: "Email is required",
@@ -234,17 +244,29 @@ export default function Join({ params }: any) {
               //   },
               // })}
             />
-            {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
+            {isWrongEmail && (
+              <p className="font-sans text-red-500 text-sm">
+                Invalid email address
+              </p>
+            )}
+            {isTrueEmail && len?.length > 1 && (
+              <pre>
+                <p className="font-sans text-blue-500 text-sm">
+                  Valid email addrress.
+                </p>
+              </pre>
             )}
           </div>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 text-sm">
+            <label
+              htmlFor="name"
+              className="block text-gray-700 dark:text-white text-sm"
+            >
               Name
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleName}
               // {...register("name", { required: "Name is required" })}
             />
@@ -253,36 +275,48 @@ export default function Join({ params }: any) {
             )}
           </div>
           <div className="mb-4">
-            <label htmlFor="phone" className="block text-gray-700 text-sm">
+            <label
+              htmlFor="phone"
+              className="block text-gray-700 dark:text-white text-sm"
+            >
               Phone
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handlePhone}
               // {...register("phone", { required: "Phone is required" })}
             />
-            {errors.phone && (
-              <p className="text-red-500">{errors.phone.message}</p>
+            {isWrongPhone && (
+              <p className="font-sans text-red-500 text-sm">
+                Invalid phone number
+              </p>
+            )}
+            {isTruePhone && len?.length > 1 && (
+              <pre>
+                <p className="font-sans text-blue-500 text-sm">
+                  Valid phone number.
+                </p>
+              </pre>
             )}
           </div>
           <div className="mb-4">
-            <label htmlFor="job" className="block text-gray-700 text-sm">
+            <label
+              htmlFor="job"
+              className="block text-gray-700 dark:text-white text-sm"
+            >
               Job
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleJob}
               // {...register("job", { required: "Job is required" })}
             />
             {errors.job && <p className="text-red-500">{errors.job.message}</p>}
           </div>
           <div className="flex justify-center">
-            <button
-              onClick={handleSubmit}
-              className="static m-11 text-white shadow-md hover:bg-gray-100 h-11 bg-black w-36 rounded-3xl"
-            >
+            <button onClick={handleSubmit} className="static m-11">
               Sign up
             </button>
           </div>

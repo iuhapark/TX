@@ -16,8 +16,6 @@ import {
 } from "@/app/components/user/service/user-slice";
 import { jwtDecode } from "jwt-decode";
 
-const SERVER = "http://localhost:8080";
-
 export default function LoginPage() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -111,14 +109,16 @@ export default function LoginPage() {
 
   return (
     <div className="flex justify-center h-screen w-full px-5 sm:px-0">
-      <div className="mt-28 w-[73vh] h-[67vh] flex bg-white  rounded-[3.5vh] shadow-2xl overflow-hidden">
+      <div className="w-[73vh] h-[67vh] overflow-hidde mt-28 flex rounded-[3.5vh] shadow-2xl overflow-x-auto">
         <div className="w-full p-[8.5vh] justify-center items-center">
-          <p className="text-2xl text-black text-center font-bold">Sign in</p>
+          <p className="text-2xl text-center font-bold">Sign in</p>
           <div className="mt-10">
-            <label className="block text-gray-700 text-sm mb-2">Username</label>
+            <label className="block text-gray-700 dark:text-white text-sm mb-2">
+              Username
+            </label>
             <input
               onChange={handleUsername}
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
+              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
               type="username"
               required
             />
@@ -141,7 +141,9 @@ export default function LoginPage() {
             </pre>
           )}
           <div className="mt-4">
-            <label className="block text-gray-700 text-sm mb-2">Password</label>
+            <label className="block text-gray-700 dark:text-white text-sm mb-2">
+              Password
+            </label>
             <input
               ref={formRef}
               onChange={handlePassword}
@@ -155,10 +157,7 @@ export default function LoginPage() {
             </pre>
           )}
           <div className="flex justify-center">
-            <button
-              onClick={handleSubmit}
-              className="static m-11 text-white shadow-md hover:bg-gray-100 h-11 bg-black w-36 rounded-3xl"
-            >
+            <button onClick={handleSubmit} className="static m-11">
               Login
             </button>
           </div>
