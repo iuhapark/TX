@@ -71,7 +71,7 @@ export default function App() {
     <div>
     <div ref={scope}>
       <Menu />
-      <MenuBar bar={() => setIsOpen(!isOpen)} />
+      <MenuBar bar={() => setIsOpen(isOpen)} />
     </div>
     </div>
   );

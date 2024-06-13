@@ -109,7 +109,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex justify-center h-screen w-full px-5 sm:px-0">
-      <div className="w-[73vh] h-[67vh] overflow-hidde mt-28 flex rounded-[3.5vh] shadow-2xl overflow-x-auto">
+      <div className="w-[73vh] h-[67vh] mt-28 flex rounded-[3.5vh] shadow-2xl overflow-y-auto">
         <div className="w-full p-[8.5vh] justify-center items-center">
           <p className="text-2xl text-center font-bold">Sign in</p>
           <div className="mt-10">
@@ -157,13 +157,16 @@ export default function LoginPage() {
             </pre>
           )}
           <div className="flex justify-center">
-            <button onClick={handleSubmit} className="static m-11">
+            <button onClick={handleSubmit} className="static mt-11">
               Login
             </button>
           </div>
-          {/* <a
+          <div className="flex justyfy-center items-center mt-4 mb-4">
+            Sign in with
+          </div>
+          <a
             href="#"
-            className=" flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100"
+            className=" flex items-center justify-center text-white rounded-[1.5rem] shadow-md hover:bg-gray-100 w-[13vh] mb-11"
           >
             <div className="flex px-5 justify-center w-full py-3">
               <div className="min-w-[30px]">
@@ -187,12 +190,12 @@ export default function LoginPage() {
                 </svg>
               </div>
               <div className="flex w-full justify-center">
-                <h1 className="whitespace-nowrap text-gray-600 font-bold">
-                  Sign in with Google
+                <h1 className="whitespace-nowrap text-gray-600 text-[15px]">
+                  Google
                 </h1>
               </div>
             </div>
-          </a> */}
+          </a>
           <div className="w-full text-center items-end">
             <Link
               href="#"

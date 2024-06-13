@@ -296,7 +296,7 @@ export default function Product() {
                     <input
                       type="radio"
                       name="product"
-                      value={product.id}
+                      value={product.id} 
                       onChange={handleProductSelect}
                       className="h-4 w-4 cursor-pointer"
                       // className="absolute opacity-0 h-0 w-0 cursor-pointer"

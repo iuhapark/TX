@@ -30,7 +30,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ReduxProvider>
-          <header>{parseCookies().message === "SUCCESS" && <Header />}</header>
+          {/* <header>{parseCookies().message === "SUCCESS" && <Header />}</header> */}
+          <Header />
           <main>
             <App />
             <Profile />
