@@ -27,7 +27,7 @@
     "nookies":"2.5.2",
     "jwt-decode": "4.0.0",
     "yarn": "^1.22.22",
-    "framer-motion": "11.2.6",
+    "framer-motion": "11.2.10",
     "core-js": "3.37.1",
 
     "cookie": "^0.6.0",
