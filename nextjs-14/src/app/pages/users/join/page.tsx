@@ -187,7 +187,7 @@ export default function Join({ params }: any) {
                 </p>
               </pre>
             )}
-            {beforeSubmit && existsUsernameSelector && (
+            {beforeSubmit && isTrueId && existsUsernameSelector && (
               <pre>
                 <p className="font-sans text-red-500 text-sm">
                   Username already exists.

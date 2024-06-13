@@ -168,19 +168,36 @@ export default function LoginPage() {
           </div>
           {isWrongPw && len?.length > 1 && (
             <pre>
-              <p className="font-sans text-red-500 text-sm">Invalid password. Please try again.</p>
+              <p className="font-sans text-red-500 text-sm">
+                Invalid password. Please try again.
+              </p>
             </pre>
           )}
-          <div className="flex justify-center mt-11 mb-11">
-            <button onClick={handleSubmit} className="static">
-              Login
+          <div className="flex justify-center mt-11 mb-5">
+            <button onClick={handleSubmit} className="static w-1/3">
+              Sign In
             </button>
+          </div>
+          <div className="w-full text-center items-end mb-5">
+            <Link
+              href="#"
+              className="text-xs text-blue-500 hover:text-gray-900 w-full"
+            >
+              Forget Password?
+            </Link>
+            <br />
+            <Link
+              href="/pages/users/join"
+              className="text-xs text-gray-500 text-center w-full pb-20"
+            >
+              <span className="text-blue-500">Create account</span>
+            </Link>
           </div>
           <div className="flex justify-center mb-11 space-x-4">
             {" "}
             <a
               href="#"
-              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 w-[13vh]"
+              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 w-1/3"
             >
               <div className="flex px-5 justify-center w-full py-3">
                 <div className="min-w-[30px]">
@@ -212,13 +229,13 @@ export default function LoginPage() {
             </a>
             <a
               href="#"
-              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 w-[13vh]"
+              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 w-1/3"
             >
               <div className="flex px-5 justify-center w-full py-3">
                 <div className="min-w-[30px]">
                   <svg
-                    width="20"
-                    height="20"
+                    width="23"
+                    height="23"
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -255,13 +272,13 @@ export default function LoginPage() {
             </a>
             <a
               href="#"
-              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 w-[13vh]"
+              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 w-1/3"
             >
               <div className="flex px-5 justify-center w-full py-3">
                 <div className="min-w-[30px]">
                   <svg
-                    width="20"
-                    height="20"
+                    width="23"
+                    height="23"
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -290,21 +307,6 @@ export default function LoginPage() {
                 </div>
               </div>
             </a>
-          </div>
-          <div className="w-full text-center items-end">
-            <Link
-              href="#"
-              className="text-xs text-blue-500 hover:text-gray-900 w-full"
-            >
-              Forget Password?
-            </Link>
-            <br />
-            <Link
-              href="/pages/users/join"
-              className="text-xs text-gray-500 text-center w-full"
-            >
-              <span className="text-blue-500">Create account</span>
-            </Link>
           </div>
         </div>
       </div>
