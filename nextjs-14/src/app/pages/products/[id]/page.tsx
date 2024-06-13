@@ -280,7 +280,7 @@ export default function Product() {
             </div>
             <div className="flex justify-start pl-12 gap-5">
               {products.length === 0 ? (
-                <p className="mt-10">상품이 존재하지 않습니다.</p>
+                <p className="mt-10 dark:text-white">상품이 존재하지 않습니다.</p>
               ) : (
                 products.map((product) => (
                   <label

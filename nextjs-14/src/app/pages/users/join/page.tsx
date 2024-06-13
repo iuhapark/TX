@@ -95,7 +95,7 @@ export default function Join({ params }: any) {
 
   const handlePassword = (e: any) => {
     const PW_CHECK =
-      /^[a-zA-Z][a-zA-Z0-9!@#$%^&*()_+[\]{};':"\\|,.<>/?]{2,9}$/g;
+      /^[a-zA-Z][a-zA-Z0-9!@#$%^&*()_+[\]{};':"\\|,.<>/?]{6,9}$/g;
     setLen(e.target.value);
     setBeforeSubmit(true);
 
