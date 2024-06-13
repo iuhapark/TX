@@ -122,7 +122,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex justify-center h-screen w-full px-5 sm:px-0">
-      <div className="w-[73vh] h-[67vh] mt-28 flex rounded-[3.5vh] shadow-2xl overflow-y-auto">
+      <div className="w-[73vh] h-[72vh] mt-28 flex rounded-[3.5vh] shadow-2xl overflow-y-auto">
         <div className="w-full p-[8.5vh] justify-center items-center">
           <p className="text-2xl text-center font-bold text-black dark:text-white">
             Sign in
@@ -174,7 +174,7 @@ export default function LoginPage() {
             </pre>
           )}
           <div className="flex justify-center mt-11 mb-5">
-            <button onClick={handleSubmit} className="static w-1/3">
+            <button onClick={handleSubmit} className="static ">
               Sign In
             </button>
           </div>
@@ -197,7 +197,7 @@ export default function LoginPage() {
             {" "}
             <a
               href="#"
-              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 w-1/3"
+              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 "
             >
               <div className="flex px-5 justify-center w-full py-3">
                 <div className="min-w-[30px]">
@@ -229,7 +229,7 @@ export default function LoginPage() {
             </a>
             <a
               href="#"
-              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 w-1/3"
+              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 "
             >
               <div className="flex px-5 justify-center w-full py-3">
                 <div className="min-w-[30px]">
@@ -272,7 +272,7 @@ export default function LoginPage() {
             </a>
             <a
               href="#"
-              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 w-1/3"
+              className="flex items-center justify-center text-white rounded-[1.5rem] dark:bg-white shadow-md hover:bg-gray-100 "
             >
               <div className="flex px-5 justify-center w-full py-3">
                 <div className="min-w-[30px]">

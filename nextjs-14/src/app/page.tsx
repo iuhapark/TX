@@ -50,7 +50,7 @@ export default function HomePage() {
           loop
           playsInline
         >
-          <source src="/img/law.mp4" type="video/mp4" />
+          <source src="/img/white.mp4" type="video/mp4" />
         </video>
         <div className="video-overlay">
           <h1>
