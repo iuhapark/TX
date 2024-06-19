@@ -40,10 +40,10 @@ export default function Profile() {
         router.push(`${PG.USER}${PG.DETAIL}/${decoded.id}`);
       } catch (error) {
         console.error("Invalid token:", error);
-        router.push(`${PG.USER}/login`);
+        router.push(`${PG.USER}/auth`);
       }
     } else {
-      router.push(`${PG.USER}/login`);
+      router.push(`${PG.USER}/auth`);
     }
   };
 
