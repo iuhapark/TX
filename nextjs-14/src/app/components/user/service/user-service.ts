@@ -4,6 +4,7 @@ import {
   findUserByIdAPI,
   loginAPI,
   existsUsernameAPI,
+  existsEmailAPI,
   logoutAPI,
   updateUserAPI,
   deleteUserAPI,
@@ -46,6 +47,15 @@ export const existsUsername: any = createAsyncThunk(
   "users/existsUsername",
   async (username: string) => {
     const data = await existsUsernameAPI(username);
+    console.log(data);
+    return data;
+  }
+);
+
+export const existsEmail: any = createAsyncThunk(
+  "users/existsEmail",
+  async (email: string) => {
+    const data = await existsEmailAPI(email);
     console.log(data);
     return data;
   }

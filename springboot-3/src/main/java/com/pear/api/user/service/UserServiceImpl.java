@@ -153,5 +153,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Boolean existsByEmail(String email) {
+        Integer count = repository.existsByEmail(email);
+        return count == 1;
+    }
 
 }

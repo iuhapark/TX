@@ -33,4 +33,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("update users a set a.balance = a.balance - :balance where a.id = :id")
     void subtractBalanceByIdMinus(@Param("id") Long id, @Param("balance") Long balance);
+
+    @Query("select count(id) as count from users where email =:email")
+    Integer existsByEmail(@Param("email") String email);
+
+    Optional<User> findByEmail(String email);
+
 }

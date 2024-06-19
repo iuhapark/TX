@@ -46,4 +46,6 @@ public interface UserService extends CommandService<UserDto>, QueryService<UserD
     Messenger modifyBalance(UserDto user);
 
 
+    Boolean existsByEmail(String email);
+
 }

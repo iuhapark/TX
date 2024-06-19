@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { existsUsername, findAllUsers, findUserById, join, login, updateUser, updateUserBalance } from "./user-service";
+import { existsUsername, existsEmail, findAllUsers, findUserById, join, login, updateUser, updateUserBalance } from "./user-service";
 import { IUser } from "../model/user";
 
 const userThunks = [findAllUsers, findUserById];
@@ -20,7 +20,7 @@ interface UserState {
   json?: IUser;
   auth?: IAuth;
   existsUsername?: boolean
-
+  existsEmail?: boolean
 }
 const initialState = {
   json: {} as IUser,
@@ -28,6 +28,7 @@ const initialState = {
   auth: {} as IAuth,
   id: 0 as number,
   existsUsername: false,
+  existsEmail: false,
 };
 
 export const userSlice = createSlice({
@@ -51,6 +52,7 @@ export const userSlice = createSlice({
     .addCase(findUserById.fulfilled,  (state: any, { payload }: any) => { state.json=payload })
     .addCase(login.fulfilled,  (state: any, { payload }: any) => { state.auth=payload })
     .addCase(existsUsername.fulfilled,  (state: any, { payload }: any) => { state.existsUsername=payload })
+    .addCase(existsEmail.fulfilled,  (state: any, { payload }: any) => { state.existsEmail=payload })
     .addCase(updateUser.fulfilled,  (state: any, { payload }: any) => { state.json=payload })
     .addCase(join.fulfilled, (state: any, { payload }: any) => { state.auth = payload })
   },
@@ -61,6 +63,7 @@ export const getUserById = (state: any) => state.user.json;
 export const getMessage = (state: any) => state.user.message;
 export const getAuth = (state: any) => state.user.auth;
 export const getExistsUsername = (state: any) => state.user.existsUsername;
+export const getExistsEmail = (state: any) => state.user.existsEmail;
 
 // export const { updateUserBalance } = userSlice.actions;
 

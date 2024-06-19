@@ -56,6 +56,17 @@ export const existsUsernameAPI = async (username: string) => {
   }
 }
 
+export const existsEmailAPI = async (email: string) => {
+  try{
+      const response = await instance().get(`/auth/existsEmail`,{params: {email}})
+      console.log('existsEmailAPI resulted: '+ response.data)
+      return response.data
+  }catch(error){
+      console.log(error)
+      return error
+  }
+}
+
 export const logoutAPI = async () => {
   try {
     const response = await instance().get(`/users/logout`);
