@@ -218,19 +218,18 @@ export default function Payment({ params }: any) {
     <>
       <div className="flex justify-center h-screen w-full px-5 sm:px-0">
         <div className="w-[73vh] h-[67vh] overflow-hidde mt-28 flex rounded-[3.5vh] shadow-2xl overflow-x-auto">
+          
           <div className="w-full p-[8.5vh] justify-center items-center">
-            <div className="dark:text-white text-2xl text-center mb-10 font-bold font-sans">
-              My 0rder
-            </div>
-            <p className="text-xl font-bold text-gray-700 dark:text-white mt-14 mb-20">
+          <div className="text-2xl text-center mb-10 font-bold">My Order</div>
+            <p className="text-xl font-bold text-gray-700mt-14 mb-20">
               Order info
             </p>
 
             <div className="grid w-1/2 grid-cols-2">
-              <p className="text-gray-700 dark:text-white font-bold text-[18px]">
+              <p className="font-bold text-[18px]">
                 잔액
               </p>
-              <p className="text-[18px] dark:text-white">{user?.balance} 포인트</p>
+              <p className="text-[18px]">{user?.balance} 포인트</p>
             </div>
             {!showProfile && (
               <button

@@ -1,6 +1,6 @@
 body {
   --black: #000000;
-  --ash-black: #222;
+  --ash-black: #272729;
   --white: #ffffff;
   --sky: #00ccff;
   --green: #22dddd;
@@ -54,14 +54,16 @@ form {
 
 @media (prefers-color-scheme: dark) {
   form {
+    /* background: var(--ash-black); */
+    border-radius: 10vh;
   }
 }
 
 
 button {
   color: white;
-  background-color: var(--text-color);
-  color: var(--background);
+  background-color: var(--black);
+  color: var(--white);
   height: 2.75rem;
   width: 13vh;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -72,20 +74,35 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 15px;
-  font-weight: 200;
+  font-weight: 2600;
   font-family: "Roboto", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   button {
-    background-color: var(--text-color);
-    color: var(--background);
+
   }
 }
 
 button:hover {
   background-color: #f3f4f6; /* hover:bg-gray-100 in Tailwind CSS */
 }
+
+.AuthButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--black);
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  margin-bottom: 1.5rem;
+  background-color: var(--white);
+}
+
+.AuthButton:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
 
 ul {
   display: flex;
@@ -144,22 +161,6 @@ ol {
   justify-content: center;
   text-align: center;
 }
-
-/* .video {
-  position: relative;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: top center;
-  color: white;
-  font-size: 18px;
-  text-align: center;
-  justify-content: center;
-  pointer-events: none;
-} */
-
-/* .footer {
-  z-index: 100;
-} */
 
 .leftAlignedText {
   text-align: left;

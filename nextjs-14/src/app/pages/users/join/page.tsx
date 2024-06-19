@@ -54,7 +54,7 @@ export default function Join({ params }: any) {
     try {
       const response = await dispatch(join(user));
       if (response.payload.message === "SUCCESS") {
-        alert("회원가입에 성공했습니다. 로그인 페이지로 이동합니다.");
+        alert("회원가입에 성공했습니다!");
         router.push(`${PG.USER}/login`);
       } else if (response.payload.message === "FAILURE") {
         alert("회원가입에 실패했습니다.");
@@ -154,22 +154,22 @@ export default function Join({ params }: any) {
     <div className="flex justify-center h-screen w-full px-5 sm:px-0 pb-20">
       <form
         // onSubmit={handleSubmit(onSubmit)}
-        className="w-[70vh] flex overflow-y-auto"
+        className="w-[73vh] flex overflow-y-auto"
       >
         <div className="w-full p-[8.5vh] justify-center items-center">
-          <p className="text-2xl text-center font-bold mb-20">
+          <p className="text-2xl text-center font-bold mb-20 text-black">
             Create your account
           </p>
           <div className="mt-10 mb-4">
             <label
               htmlFor="username"
-              className="block text-gray-700 dark:text-white text-sm"
+              className="block text-gray-700 text-sm"
             >
               Username
             </label>
             <input
               type="username"
-              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleUsername}
               // {...register("username", { required: "Username is required" })}
             />
@@ -198,13 +198,13 @@ export default function Join({ params }: any) {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="block text-gray-700 dark:text-white text-sm"
+              className="block text-gray-700  text-sm"
             >
               Password
             </label>{" "}
             <input
               type="password"
-              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handlePassword}
               // {...register("password", { required: "Password is required" })}
             />
@@ -228,13 +228,13 @@ export default function Join({ params }: any) {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="block text-gray-700 dark:text-white text-sm"
+              className="block text-gray-700  text-sm"
             >
               Email
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleEmail}
               // {...register("email", {
               //   required: "Email is required",
@@ -260,13 +260,13 @@ export default function Join({ params }: any) {
           <div className="mb-4">
             <label
               htmlFor="name"
-              className="block text-gray-700 dark:text-white text-sm"
+              className="block text-gray-700  text-sm"
             >
               Name
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleName}
               // {...register("name", { required: "Name is required" })}
             />
@@ -277,13 +277,13 @@ export default function Join({ params }: any) {
           <div className="mb-4">
             <label
               htmlFor="phone"
-              className="block text-gray-700 dark:text-white text-sm"
+              className="block text-gray-700  text-sm"
             >
               Phone
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handlePhone}
               // {...register("phone", { required: "Phone is required" })}
             />
@@ -303,13 +303,13 @@ export default function Join({ params }: any) {
           <div className="mb-4">
             <label
               htmlFor="job"
-              className="block text-gray-700 dark:text-white text-sm"
+              className="block text-gray-700  text-sm"
             >
               Job
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700 dark:text-white border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
               onChange={handleJob}
               // {...register("job", { required: "Job is required" })}
             />

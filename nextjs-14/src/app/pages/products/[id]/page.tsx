@@ -275,12 +275,12 @@ export default function Product() {
       <div className="flex justify-center h-screen w-full px-5 sm:px-0">
         <div className="mt-28 w-[90vh] h-[67vh] flex">
           <div className="w-full pt-[8.5vh] justify-center items-center">
-            <div className="mt-6 mb-8 pl-12 text-2xl dark:text-white">
+            <div className="mt-6 mb-8 pl-12 text-2xl ">
               상담 항목을 선택하세요.
             </div>
             <div className="flex justify-start pl-12 gap-5">
               {products.length === 0 ? (
-                <p className="mt-10 dark:text-white">상품이 존재하지 않습니다.</p>
+                <p className="mt-10 ">상품이 존재하지 않습니다.</p>
               ) : (
                 products.map((product) => (
                   <label
@@ -298,13 +298,13 @@ export default function Product() {
                       name="product"
                       value={product.id} 
                       onChange={handleProductSelect}
-                      className="h-4 w-4 cursor-pointer"
+                      className="h-3 w-3 cursor-pointer"
                       // className="absolute opacity-0 h-0 w-0 cursor-pointer"
                     />
                     <br />
                     {product.item_name} <br />
                     {product.duration} <br />
-                    {product.price}pt
+                    {product.price} 포인트
                   </label>
                 ))
               )}
@@ -313,13 +313,13 @@ export default function Product() {
         </div>
         <div className="mt-28 w-[47vh] h-[67vh] flex shadow-none">
           <div className="w-full p-[8.5vh] justify-center items-center">
-            <div className="mt-6 mb-8 text-2xl dark:text-white">
+            <div className="mt-6 mb-8 text-2xl ">
               변호사를 선택하세요.
             </div>
             <DropdownMenu />
             <div className="flex flex-col mt-10">
               <div className="mt-4 grid grid-cols-2 grid-rows-2">
-                <p className="text-[18px] mb-2 dark:text-white">
+                <p className="text-[18px] mb-2 ">
                   잔액 {user?.balance} 포인트
                 </p>
               </div>
@@ -331,7 +331,7 @@ export default function Product() {
                   Pay
                 </button>
                 <button
-                  className="mt-40 hover:bg-blue-400 items-center justify-center flex"
+                  className="mt-40 hover:bg-blue-400 items-center justify-center flex" 
                   onClick={handlePointUsage}
                 >
                   Use point
