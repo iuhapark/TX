@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Security - OAuth2 Login</title>
+</head>
+<body>
+<h1>Endpoints</h1>
+<h2>Private</h2>
+<ul>
+    <li><a th:href="@{/messages}">Private</a>
+        endpoint where Google auth is required.
+    </li>
+</ul>
+
+<h2>Public</h2>
+<ul>
+    <li><a th:href="@{/public/messages}">Public</a>
+        endpoint where no authentication is required.
+    </li>
+</ul>
+
+</body>
+</html>
