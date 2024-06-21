@@ -19,32 +19,17 @@ public interface PaymentService extends CommandService<PaymentDto>, QueryService
     default com.pear.api.payment.model.Payment dtoToEntity(PaymentDto dto) {
         return com.pear.api.payment.model.Payment.builder()
                 .paymentUid(UUID.randomUUID().toString())
-                .itemName(dto.getItemName())
                 .amount(dto.getAmount())
-                .buyerEmail(dto.getBuyerEmail())
-                .buyerName(dto.getBuyerName())
-                .buyerTel(dto.getBuyerTel())
-                .buyerAddr(dto.getBuyerAddr())
                 .build();
     }
 
     default PaymentDto entityToDto(com.pear.api.payment.model.Payment pay){
         return PaymentDto.builder()
                 .orderUid(UUID.randomUUID().toString())
-                .itemName(pay.getItemName())
                 .amount(pay.getAmount())
-                .buyerEmail(pay.getBuyerEmail())
-                .buyerName(pay.getBuyerName())
-                .buyerTel(pay.getBuyerTel())
-                .buyerAddr(pay.getBuyerAddr())
                 .build();
     }
 
     PaymentDto getBalance(Long id);
 
-    Messenger charge(PaymentDto dto);
-
-    Messenger withdraw(PaymentDto dto);
-
-    void cancel(PaymentDto dto);
 }
