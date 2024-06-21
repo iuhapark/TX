@@ -14,17 +14,9 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByOrderByIdDesc();
 
-    @Query("select a from users a where a.username = :username")
-    Optional<User> findByUsername(String username);
-
-
     @Modifying
     @Query("update users a set a.token = :token where a.id = :id")
     void modifyTokenById(@Param("id") Long id, @Param("token") String token);
-
-
-    @Query("select count(id) as count from users where username =:username")
-    Integer existsByUsername(@Param("username") String username);
 
     @Modifying
     @Query("update users a set a.balance = a.balance + :balance where a.id = :id")
@@ -37,6 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select count(id) as count from users where email =:email")
     Integer existsByEmail(@Param("email") String email);
 
+    @Query("select a from users a where a.email = :email")
     Optional<User> findByEmail(String email);
 
 }

@@ -49,13 +49,6 @@ public class AuthController {
         return ResponseEntity.ok(messenger);
     }
 
-    @GetMapping("/existsUsername")
-    public ResponseEntity<Boolean> existsByUsername(@RequestParam("username") String username) {
-        log.info("Parameter information of existsUsername: " + username);
-        Boolean flag = service.existsByUsername(username);
-        log.info("existsUsername : " + username);
-        return ResponseEntity.ok(flag);
-    }
 
     @GetMapping("/existsEmail")
     public ResponseEntity<Boolean> existsByEmail(@RequestParam("email") String email) {

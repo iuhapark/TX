@@ -68,10 +68,10 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             User modifyUser = user.toBuilder()
-                    .password(dto.getPassword())
-                    .job(dto.getJob())
-                    .phone(dto.getPhone())
                     .email(dto.getEmail())
+                    .password(dto.getPassword())
+                    .phone(dto.getPhone())
+                    .sex(dto.getSex())
                     .build();
             Long updateUserId = repository.save(modifyUser).getId();
 
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Messenger login(UserDto dto) {
         log.info("Parameters received through login service" + dto);
-        User user = repository.findByUsername(dto.getUsername()).get();
+        User user = repository.findByEmail(dto.getEmail()).get();
         String accessToken = jwtProvider.createToken(entityToDto(user));
         boolean flag = user.getPassword().equals(dto.getPassword());
         if (flag) {
@@ -111,15 +111,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean existsByUsername(String username) {
-        Integer count = repository.existsByUsername(username);
-        return count == 1;
-    }
-
-    @Override
     public User autoRegister() {
         User user = User.builder()
-                .username(UUID.randomUUID().toString())
                 .email("example@example.com")
                 .build();
         return repository.save(user);

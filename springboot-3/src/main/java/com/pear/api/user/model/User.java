@@ -1,6 +1,7 @@
 package com.pear.api.user.model;
 
 import com.pear.api.common.model.BaseEntity;
+import com.pear.api.payment.model.Payment;
 import com.pear.api.post.model.Post;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,16 +26,16 @@ public class User extends BaseEntity {
     private String age;
     private String sex;
     private String token;
-    private Long point = 0L;
-
-    //제외목록
-    private String username;
+    private Long point;
     private String password;
-    private String job;
     private Long balance = 0L;
 
     @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
+
+    @OneToMany(mappedBy = "buyer")
+    private List<Payment> payments;
+
 
 }
 

@@ -10,12 +10,13 @@ public interface UserService extends CommandService<UserDto>, QueryService<UserD
 
     default User dtoToEntity(UserDto dto) {
         return User.builder()
-                .username(dto.getUsername())
+                .email(dto.getEmail())
                 .password(dto.getPassword())
                 .name(dto.getName())
                 .phone(dto.getPhone())
-                .email(dto.getEmail())
-                .job(dto.getJob())
+                .age(dto.getAge())
+                .sex(dto.getSex())
+                .point(dto.getPoint())
                 .balance(dto.getBalance())
                 .build();
     }
@@ -23,12 +24,13 @@ public interface UserService extends CommandService<UserDto>, QueryService<UserD
     default UserDto entityToDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
-                .username(user.getUsername())
+                .email(user.getEmail())
                 .password(user.getPassword())
                 .name(user.getName())
                 .phone(user.getPhone())
-                .email(user.getEmail())
-                .job(user.getJob())
+                .age(user.getAge())
+                .sex(user.getSex())
+                .point(user.getPoint())
                 .balance(user.getBalance())
                 .build();
     }
@@ -39,12 +41,9 @@ public interface UserService extends CommandService<UserDto>, QueryService<UserD
 
     Messenger modify(UserDto user);
 
-    Boolean existsByUsername(String username);
-
     User autoRegister();
 
     Messenger modifyBalance(UserDto user);
-
 
     Boolean existsByEmail(String email);
 
