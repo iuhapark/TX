@@ -9,7 +9,6 @@ import { parseCookies } from "nookies";
 import Profile from "./components/common/module/profile";
 import Footer from "./components/common/module/footer";
 import TemporaryDrawer from "./components/common/module/drawer";
-import SessionWrapper from "./components/wrapper/SessionWrapper";
 
 const ReduxProvider = dynamic(() => import("@/redux/redux-provider"), {
   ssr: false,
@@ -23,7 +22,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionWrapper>
       <html lang="en">
         <body className={inter.className}>
           <ReduxProvider>
@@ -39,6 +37,5 @@ export default function RootLayout({
           </ReduxProvider>
         </body>
       </html>
-    </SessionWrapper>
   );
 }
