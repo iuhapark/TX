@@ -1,4 +1,4 @@
-package com.pear.api.common.enums;
+package com.pear.api.common.emums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
