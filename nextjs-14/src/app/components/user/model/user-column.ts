@@ -1,11 +1,13 @@
 export interface UserColumn {
-    id?: string;
+    id?: number;
     username?: string;
+    email?: string;
     password?: string;
     name?: string;
     phone?: string;
-    email?: string;
     job?: string;
+    age?: String;
+    sex?: string;
+    point?: string;
     balance?: string;
-    addressId?: string;
 }

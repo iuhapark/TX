@@ -2,13 +2,16 @@ import { IUser } from "../model/user";
 
 export const initialState: IUser = {
   id: 0,
-  username: '',
-  password: '',
   email: '',
+  password: '',
   name: '',
   phone: '',
   job: '',
+  age: '',
+  sex: '',
+  point: '',
   balance: '',
   regDate: '',
-  modDate: ''
+  modDate: '',
+  username: '',
 };
