@@ -19,16 +19,16 @@ import org.hibernate.annotations.OnDeleteAction;
 @ToString(exclude = {"id"})
 @Log4j2
 public class Post extends BaseEntity {
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
     private String content;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "writer_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User writer;
 

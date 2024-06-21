@@ -4,6 +4,8 @@ import com.pear.api.payment.model.Payment;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity(name = "products")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -18,9 +20,7 @@ public class Product {
     private Long id;
     private String itemName;
     private Long price;
-    private String duration;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
+    @OneToMany(mappedBy = "product")
+    private List<Payment> payments;
 }
