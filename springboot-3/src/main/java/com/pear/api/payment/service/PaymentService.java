@@ -32,4 +32,11 @@ public interface PaymentService extends CommandService<PaymentDto>, QueryService
 
     PaymentDto getBalance(Long id);
 
+
+    Messenger charge(PaymentDto dto);
+
+    Messenger withdraw(PaymentDto dto);
+
+    void cancel(PaymentDto dto);
+
 }
