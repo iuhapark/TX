@@ -19,8 +19,6 @@ export default function Join({ params }: any) {
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [user, setUser] = useState({} as IUser);
-  const [isWrongId, setIsWrongId] = useState(false);
-  const [isTrueId, setIsTrueId] = useState(false);
   const [isTruePw, setIsTruePw] = useState(false);
   const [isWrongPw, setIsWrongPw] = useState(false);
   const [isTrueEmail, setIsTrueEmail] = useState(false);
@@ -62,34 +60,6 @@ export default function Join({ params }: any) {
       }
     } catch (error) {
       console.log("회원가입 중 에러 발생 : ", error);
-    }
-  };
-
-  const handleUsername = async (e: any) => {
-    dispatch(existsUsername(e.target.value));
-    const ID_CHECK = /^[a-z][a-z0-9]{4,10}$/g;
-
-    setUser({
-      ...user,
-      username: e.target.value,
-    });
-    setLen(e.target.value);
-    setBeforeSubmit(true);
-
-    if (ID_CHECK.test(len)) {
-      try {
-        const response = await dispatch(existsUsername(e.target.value));
-        setIsWrongId(!response.payload);
-        setIsTrueId(true);
-      } catch (error) {
-        console.error("Error checking username:", error);
-        setErrorMessage("Failed to check username. Please try again.");
-      }
-      setIsWrongId(false);
-      setIsTrueId(true);
-    } else {
-      setIsWrongId(true);
-      setIsTrueId(false);
     }
   };
 
@@ -146,8 +116,12 @@ export default function Join({ params }: any) {
     }
   };
 
-  const handleJob = (e: any) => {
-    setUser({ ...user, job: e.target.value });
+  const handleAge = (e: any) => {
+    setUser({ ...user, age: e.target.value });
+  };
+
+  const handleSex = (e: any) => {
+    setUser({ ...user, sex: e.target.value });
   };
 
   return (
@@ -160,76 +134,8 @@ export default function Join({ params }: any) {
           <p className="text-2xl text-center font-bold mb-20 text-black">
             Create your account
           </p>
-          <div className="mt-10 mb-4">
-            <label
-              htmlFor="username"
-              className="block text-gray-700 text-sm"
-            >
-              Username
-            </label>
-            <input
-              type="username"
-              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
-              onChange={handleUsername}
-              // {...register("username", { required: "Username is required" })}
-            />
-            {isWrongId && len?.length > 1 && (
-              <pre>
-                <p className="font-sans text-red-500 text-sm">
-                  Invalid username
-                </p>
-              </pre>
-            )}
-            {isTrueId && len?.length > 1 && !existsUsernameSelector && (
-              <pre>
-                <p className="font-sans text-blue-500 text-sm">
-                  Valid username.
-                </p>
-              </pre>
-            )}
-            {beforeSubmit && isTrueId && existsUsernameSelector && (
-              <pre>
-                <p className="font-sans text-red-500 text-sm">
-                  Username already exists.
-                </p>
-              </pre>
-            )}
-          </div>
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-700  text-sm"
-            >
-              Password
-            </label>{" "}
-            <input
-              type="password"
-              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
-              onChange={handlePassword}
-              // {...register("password", { required: "Password is required" })}
-            />
-            {isWrongPw && (
-              <pre>
-                <p className="font-sans text-red-500 text-xs">
-                  Invalid password. Must contain 4 to 10 uppercase letters,
-                  lowercase letters, <br />
-                  numbers and special characters.
-                </p>
-              </pre>
-            )}
-            {isTruePw && len?.length > 1 && (
-              <pre>
-                <p className="font-sans text-blue-500 text-sm">
-                  Valid password.
-                </p>
-              </pre>
-            )}
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700  text-sm"
-            >
+            <label htmlFor="email" className="block text-gray-700  text-sm">
               Email
             </label>
             <input
@@ -258,10 +164,34 @@ export default function Join({ params }: any) {
             )}
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-gray-700  text-sm"
-            >
+            <label htmlFor="password" className="block text-gray-700  text-sm">
+              Password
+            </label>{" "}
+            <input
+              type="password"
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              onChange={handlePassword}
+              // {...register("password", { required: "Password is required" })}
+            />
+            {isWrongPw && (
+              <pre>
+                <p className="font-sans text-red-500 text-xs">
+                  Invalid password. Must contain 4 to 10 uppercase letters,
+                  lowercase letters, <br />
+                  numbers and special characters.
+                </p>
+              </pre>
+            )}
+            {isTruePw && len?.length > 1 && (
+              <pre>
+                <p className="font-sans text-blue-500 text-sm">
+                  Valid password.
+                </p>
+              </pre>
+            )}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-gray-700  text-sm">
               Name
             </label>
             <input
@@ -275,10 +205,7 @@ export default function Join({ params }: any) {
             )}
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="phone"
-              className="block text-gray-700  text-sm"
-            >
+            <label htmlFor="phone" className="block text-gray-700  text-sm">
               Phone
             </label>
             <input
@@ -301,17 +228,26 @@ export default function Join({ params }: any) {
             )}
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="job"
-              className="block text-gray-700  text-sm"
-            >
-              Job
+            <label htmlFor="age" className="block text-gray-700  text-sm">
+              Age
             </label>
             <input
               type="text"
               className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
-              onChange={handleJob}
-              // {...register("job", { required: "Job is required" })}
+              onChange={handleAge}
+              // {...register("age", { required: "Job is required" })}
+            />
+            {errors.job && <p className="text-red-500">{errors.job.message}</p>}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="age" className="block text-gray-700  text-sm">
+              Sex
+            </label>
+            <input
+              type="text"
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500 mt-2"
+              onChange={handleSex}
+              // {...register("age", { required: "Job is required" })}
             />
             {errors.job && <p className="text-red-500">{errors.job.message}</p>}
           </div>

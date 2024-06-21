@@ -5,14 +5,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import {
-  existsUsername,
+  existsEmail,
   login,
 } from "@/app/components/user/service/user-service";
 import { IUser } from "@/app/components/user/model/user";
 import nookies, { parseCookies, destroyCookie, setCookie } from "nookies";
 import {
   getAuth,
-  getExistsUsername,
+  getExistsEmail,
 } from "@/app/components/user/service/user-slice";
 import { jwtDecode } from "jwt-decode";
 
@@ -23,30 +23,30 @@ export default function LoginPage() {
   const formRef = useRef<HTMLInputElement>(null);
 
   const [user, setUser] = useState({} as IUser); //하나의 instance로 만듬
-  const [isWrongId, setIsWrongId] = useState(false);
-  const [isTrueId, setIsTrueId] = useState(false);
+  const [isTrueEmail, setIsTrueEmail] = useState(false);
+  const [isWrongEmail, setIsWrongEmail] = useState(false);
   const [beforeSubmit, setBeforeSubmit] = useState(true);
   const [len, setLen] = useState("");
   const [isWrongPw, setIsWrongPw] = useState(false);
-  const existsUsernameSelector = useSelector(getExistsUsername);
+  const existsEmailSelector = useSelector(getExistsEmail);
 
   //boolean type의 경우 is를 넣어줌
-  const handleUsername = (e: any) => {
-    const ID_CHECK = /^[a-z][a-z0-9]{4,10}$/g;
+  const handleEmail = (e: any) => {
+    const EMAIL_CHECK = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     setLen(e.target.value);
     setBeforeSubmit(true);
 
-    if (ID_CHECK.test(len)) {
-      setIsWrongId(false);
-      setIsTrueId(true);
+    if (EMAIL_CHECK.test(len)) {
+      setIsWrongEmail(false);
+      setIsTrueEmail(true);
       setUser({
         ...user,
-        username: e.target.value,
+        email: e.target.value,
       });
-      console.log("ID_CHECK 내용 : " + JSON.stringify(user));
+      console.log("EMAIL_CHECK 내용 : " + JSON.stringify(user));
     } else {
-      setIsWrongId(true);
-      setIsTrueId(false);
+      setIsWrongEmail(true);
+      setIsTrueEmail(false);
     }
   };
   const handlePassword = (e: any) => {
@@ -72,7 +72,7 @@ export default function LoginPage() {
 
   const handleSubmit = () => {
     console.log("user ..." + JSON.stringify(user));
-    dispatch(existsUsername(user.username))
+    dispatch(existsEmail(user.email))
       .then((res: any) => {
         console.log(res.payload);
         if (res.payload === true) {
@@ -99,10 +99,10 @@ export default function LoginPage() {
               console.log("Login Failed");
             });
         } else {
-          console.log("아이디가 존재하지 않습니다");
+          console.log("존재하지 않는 이메일입니다");
           setBeforeSubmit(false);
-          setIsWrongId(false);
-          setIsTrueId(false);
+          setIsWrongEmail(false);
+          setIsTrueEmail(false);
         }
       })
       .catch((err: any) => {
@@ -113,8 +113,8 @@ export default function LoginPage() {
       });
     // dispatch(login(user))
     setBeforeSubmit(false);
-    setIsWrongId(false);
-    setIsTrueId(false);
+    setIsWrongEmail(false);
+    setIsTrueEmail(false);
     if (formRef.current) {
       formRef.current.value = "";
     }
@@ -126,37 +126,27 @@ export default function LoginPage() {
         <div className="w-full p-[8.5vh] justify-center items-center">
           <p className="text-2xl text-black text-center font-bold">Sign in</p>
           <div className="mt-10">
-            <label className="block text-gray-700 text-sm mb-2">
-              Username
-            </label>
+            <label className="block text-gray-700 text-sm mb-2">Email</label>
             <input
-              onChange={handleUsername}
+              onChange={handleEmail}
               className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
-              type="username"
+              type="email"
               required
             />
           </div>
-          {isWrongId && len?.length > 1 && (
+          {isWrongEmail && len?.length > 1 && (
             <pre>
-              <p className="font-sans text-red-500 text-sm">Invalid username</p>
+              <p className="font-sans text-red-500 text-sm">Invalid email</p>
             </pre>
           )}
-          {isTrueId && len?.length > 1 && (
+          {isTrueEmail && len?.length > 1 && (
             <pre>
-              <p className="font-sans text-blue-500 text-sm">Valid username.</p>
+              <p className="font-sans text-blue-500 text-sm">Valid email.</p>
             </pre>
           )}
-          {!beforeSubmit && !existsUsernameSelector && (
-            <pre>
-              <p className="font-sans text-red-500 text-sm">
-                Username does not exist.
-              </p>
-            </pre>
-          )}
+
           <div className="mt-4">
-            <label className="block text-gray-700 text-sm mb-2">
-              Password
-            </label>
+            <label className="block text-gray-700 text-sm mb-2">Password</label>
             <input
               ref={formRef}
               onChange={handlePassword}

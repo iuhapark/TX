@@ -86,9 +86,9 @@ export default function UserDetail() {
           <div className="mt-6 w-full grid grid-cols-2 mb-10 gap-y-7">
             <div>
               <p className="light:text-gray-700 dark:text-white font-bold">
-                Username
+                Email
               </p>
-              <p className="dark:text-white">{user?.username || ""}</p>
+              <p className="dark:text-white">{user?.email || ""}</p>
             </div>
             <div>
               <p className="light:text-gray-700 dark:text-white font-bold">
@@ -104,9 +104,9 @@ export default function UserDetail() {
             </div>
             <div>
               <p className="light:text-gray-700 dark:text-white font-bold">
-                Email
+                Age
               </p>
-              <p className="dark:text-white">{user?.email || ""}</p>
+              <p className="dark:text-white">{user?.age || ""}</p>
             </div>
           </div>
         </div>
@@ -118,13 +118,12 @@ export default function UserDetail() {
           </p>
           <div className="mb-4">
             <label className="block light:text-gray-700 text-sm mb-2">
-              Username
+              Email
             </label>
             <input
               type="text"
-              className="h-[6vh] text-gray-700  bg-gray-200 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-none"
-              value={user && user.username ? user.username : ""}
-              readOnly
+              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
+              {...register("email")}
             />
           </div>
           <div className="mb-4">
@@ -137,16 +136,7 @@ export default function UserDetail() {
               {...register("password")}
             />
           </div>
-          <div className="mb-4">
-            <label className="block light:text-gray-700 text-sm mb-2">
-              Email
-            </label>
-            <input
-              type="text"
-              className="h-[6vh] text-gray-700  border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
-              {...register("email")}
-            />
-          </div>
+
           <div className="mb-4">
             <label className="block light:text-gray-700 text-sm mb-2">
               Name
@@ -170,12 +160,22 @@ export default function UserDetail() {
           </div>
           <div className="mb-4">
             <label className="block light:text-gray-700  text-sm mb-2">
-              Job
+              Age
             </label>
             <input
               type="text"
               className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
-              {...register("job")}
+              {...register("age")}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block light:text-gray-700  text-sm mb-2">
+              Sex
+            </label>
+            <input
+              type="text"
+              className="h-[6vh] text-gray-700 border border-gray-300 rounded-2xl py-2 px-4 block w-full focus:outline-2 focus:outline-blue-500"
+              {...register("sex")}
             />
           </div>
           <div className="flex justify-center mt-10">
